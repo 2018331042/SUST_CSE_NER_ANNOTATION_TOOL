@@ -10,13 +10,15 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { email, name } = req.body;
+  const { email, name, password, role } = req.body;
 
   const response = client.mutate({
     mutation: INSERT_USER_ONE,
     variables: {
       email,
       name,
+      password,
+      role,
     },
   });
   console.log({ response });
