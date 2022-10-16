@@ -46,3 +46,10 @@ export const GET_USER = gql`
     }
   }
 `;
+export const GET_SENTENCE = gql`
+query GET_SENTENCE {
+  datasets {
+    sentence
+  }
+}
+`

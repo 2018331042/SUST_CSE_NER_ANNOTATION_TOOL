@@ -2,13 +2,18 @@ import { AppShell, Button, Navbar } from "@mantine/core";
 import React from "react";
 import Page from "../components/page";
 import { useAuth } from "../lib/client/contexts/auth";
+import { client, GET_SENTENCE } from "../lib/server/graphql";
 
-const Annotation = () => {
+const Annotation = ({sentence}) => {
   const { signOut } = useAuth();
   const handleLogout = () => {
     const response = signOut();
     console.log({ response });
   };
+
+  console.log({sentence: sentence[0].sentence});
+  
+
   return (
     <Page>
       <AppShell
@@ -30,10 +35,30 @@ const Annotation = () => {
           },
         })}
       >
-        <div>Data Annotation</div>
+        <div style={{border: "1px solid black", padding:"1rem"}}>
+          { sentence[0].sentence}
+        </div>
+        <Button>Next</Button>
       </AppShell>
     </Page>
   );
 };
 
+
 export default Annotation;
+
+export async function getServerSideProps(ctx: any) {
+  const response = await client.query({
+    query:GET_SENTENCE
+  })
+
+  console.log({response: response.data.datasets});
+
+  return{
+    props:{
+      sentence: response.data.datasets
+    }
+  }
+  
+}
+
