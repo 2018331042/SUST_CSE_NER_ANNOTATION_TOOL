@@ -22,6 +22,7 @@ interface Auth {
     email: string,
     password: string
   ) => Promise<{ status: string; message: string; errorMessage?: string }>;
+  signOut: () => void;
 }
 
 const AuthContext = createContext<Auth>({
@@ -30,6 +31,7 @@ const AuthContext = createContext<Auth>({
   user: null,
   signIn: (email: string, password: string) =>
     new Promise((res) => res({ status: "", message: "" })),
+  signOut: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -123,8 +125,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signOut = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setUser(null);
+    router.push("/");
+    return { status: "success", message: "logged out" };
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoading, isLoggedIn, signIn, user }}>
+    <AuthContext.Provider
+      value={{ isLoading, isLoggedIn, signIn, user, signOut }}
+    >
       {!isLoading && children}
     </AuthContext.Provider>
   );
