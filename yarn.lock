@@ -1264,6 +1264,11 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
+fetchline@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/fetchline/-/fetchline-1.0.1.tgz#1af5da422cce99c573445f094a5e76de380a030c"
+  integrity sha512-I+rjYRXNpG8Ncl+8KOVcWAoony2Az6WnXiIdqingnVQmWSFDvmniBTFtZReYlqHhKcxH/+rYr2rMhgzJEnE9Sg==
+
 file-entry-cache@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-6.0.1.tgz#211b2dd9659cb0394b073e7323ac3c933d522027"
@@ -1359,6 +1364,11 @@ get-symbol-description@^1.0.0:
   dependencies:
     call-bind "^1.0.2"
     get-intrinsic "^1.1.1"
+
+getfileline@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/getfileline/-/getfileline-1.0.1.tgz#ca85aab42b9a849efb76c4557f65e073f73ca70c"
+  integrity sha512-cvckNSNX1mGohzKEIEn4NlMheK4QaNgceC58KsZqp6UXYJDqOewMDpYN/5g6ylX4Y897/5PFjPnnxsnQK22Z6w==
 
 glob-parent@^5.1.2:
   version "5.1.2"
@@ -1740,6 +1750,11 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+linebyline@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/linebyline/-/linebyline-1.3.0.tgz#6ef54ceab832d23f7841ed2f296fe9b2f6dade94"
+  integrity sha512-3fpIYMrSU77OCf89hjXKuCx6vGwgWEu4N5DDCGqgZ1BF0HYy9V8IbQb/3+VWIU17iBQ83qQoUokH0AhPMOTi7w==
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
@@ -2124,6 +2139,11 @@ react@18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+readlineiter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/readlineiter/-/readlineiter-1.0.1.tgz#1b3279728b356bf5bd729fc03609e7c9896524d3"
+  integrity sha512-MBYfZO9b2UMXlIOHtx7CvlzCcGWPJqJS8Oaok02LaTiWNrBVuM74BE1xl3Z93NW48WSVwyds7XPJFhv7Skm5gw==
 
 regenerator-runtime@^0.13.4:
   version "0.13.10"

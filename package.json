@@ -16,12 +16,16 @@
     "@mantine/hooks": "^5.5.5",
     "@mantine/notifications": "^5.5.5",
     "axios": "^1.1.2",
+    "fetchline": "^1.0.1",
+    "getfileline": "^1.0.1",
     "gql": "^1.1.2",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^8.5.1",
+    "linebyline": "^1.3.0",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "readlineiter": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "18.8.5",
