@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import connectDb from "../../../lib/db";
+import User from "../../../lib/models/user";
 import { client, GET_USER_BY_EMAIL } from "../../../lib/server/graphql";
 import createToken from "../token";
 
@@ -9,18 +11,16 @@ export default async function handler(
   const { email, password } = req.body;
 
   try {
-    const result = await client.query({
-      query: GET_USER_BY_EMAIL,
-      variables: {
-        email,
-      },
-    });
+    await connectDb();
+    const user = await User.findOne({email});
 
-    console.log({ result: result.data.users });
+    console.log({ id: user._id });
+    const id = user._id.toString();
+    console.log({id});
 
-    if (result) {
-      if (result.data.users[0].password === password) {
-        const { name, role, id } = result.data.users[0];
+    if (user) {
+      if (user.password === password) {
+        const { name, role } = user;
         const token = createToken(role, id, email);
         console.log(`token: ${token}`);
 

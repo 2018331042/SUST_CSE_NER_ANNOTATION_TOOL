@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
-import { client, GET_USER } from "../../../lib/server/graphql";
+import User from "../../../lib/models/user";
 type Data = {
   status: String;
   message: String;
@@ -21,30 +21,22 @@ export default async function handler(
   try {
     const data = jwt.verify(
       token,
-      process.env.HASURA_GRAPHQL_JWT_SECRET
+      process.env.JWT_SECRET
     ) as jwtPayload;
     console.log({ data });
-    const response = await client.query({
-      query: GET_USER,
-      variables: {
-        id: data.id,
-      },
-    });
+    const user = await User.findById({_id:data.id});
 
-    if (
-      !(
-        response.data.users_by_pk.session_token ===
-        data["https://hasura.io/jwt/claims"]["x-hasura-session-token"]
-      )
-    ) {
-      throw new Error();
+    console.log({user});
+    
+    if(user){
+      res.status(200).json({
+        status: "success",
+        message: "user found",
+        data: user,
+        isVerified: true,
+      });
     }
-    res.status(200).json({
-      status: "success",
-      message: "user found",
-      data: response.data.users_by_pk,
-      isVerified: true,
-    });
+   
   } catch (err) {
     res.status(200).json({
       status: "failed",

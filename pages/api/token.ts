@@ -5,17 +5,9 @@ export default function createToken(role: String, id: any, email: String) {
       id,
       email,
       role,
-      "https://hasura.io/jwt/claims": {
-        "x-hasura-allowed-roles": [role],
-        "x-hasura-default-role": role,
-        "x-hasura-user-id": id,
-        "x-hasura-user-role": role,
-        "x-hasura-user-email": email,
-      },
     },
-    process.env.HASURA_GRAPHQL_JWT_SECRET,
-    { algorithm: "HS256" }
+    process.env.JWT_SECRET,
   );
-  console.log(jwt.verify(token, process.env.HASURA_GRAPHQL_JWT_SECRET));
+  console.log(jwt.verify(token, process.env.JWT_SECRET));
   return token;
 }

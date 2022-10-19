@@ -2,7 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connectDb from "../../lib/db";
 import User from "../../lib/models/user";
-import { client, INSERT_USER_ONE } from "../../lib/server/graphql";
 
 type Data = {};
 
