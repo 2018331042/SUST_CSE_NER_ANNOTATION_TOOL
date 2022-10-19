@@ -8,13 +8,12 @@ import {
   Text,
 } from "@mantine/core";
 import axios from "axios";
-import { userInfo } from "os";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
 import { useAuth } from "../lib/client/contexts/auth";
 import connectDb from "../lib/db";
-import Dataset from "../lib/models/dataset";
-import convertToObj from "../utils/convertToObj";
 
 const options = ["PER", "ORG", "LOC", "others"];
 const tokens = [
@@ -36,17 +35,11 @@ const tokens = [
 ];
 
 const Annotation = ({ sentence }) => {
-  const { signOut, user } = useAuth();
+  const { user } = useAuth();
   const [tags, setTags] = useState([]);
   const [tagId, setTagid] = useState([]);
   const [value, setValue] = useState(sentence);
   console.log({ value });
-  const handleLogout = () => {
-    const response = signOut();
-    console.log({ response });
-  };
-
-  const handleAnnotatedData = () => {};
 
   const handleNext = async () => {
     console.log({ user });
@@ -68,31 +61,7 @@ const Annotation = ({ sentence }) => {
 
   return (
     <Page>
-      <AppShell
-        navbar={
-          <Navbar width={{ base: 250 }} height={500} p="xs">
-            <Button
-              variant="subtle"
-              fullWidth
-              size="xl"
-              onClick={handleAnnotatedData}
-            >
-              Annotated Data
-            </Button>
-            <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
-              Logout
-            </Button>
-          </Navbar>
-        }
-        styles={(theme) => ({
-          main: {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        })}
-      >
+      <AnnotatorNavbar>
         <div>
           {value &&
             (value.data !== null ? (
@@ -143,7 +112,7 @@ const Annotation = ({ sentence }) => {
               </div>
             ))}
         </div>
-      </AppShell>
+      </AnnotatorNavbar>
     </Page>
   );
 };
