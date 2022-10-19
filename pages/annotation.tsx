@@ -9,10 +9,7 @@ import {
 } from "@mantine/core";
 import React, { useState } from "react";
 import Page from "../components/page";
-import Token from "../components/token";
-import Tokens from "../components/tokens";
 import { useAuth } from "../lib/client/contexts/auth";
-import { client, GET_SENTENCE } from "../lib/server/graphql";
 
 const options = ["PER", "ORG", "LOC", "others"];
 const tokens = [

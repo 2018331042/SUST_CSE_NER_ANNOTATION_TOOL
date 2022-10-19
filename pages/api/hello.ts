@@ -1,26 +1,31 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import connectDb from "../../lib/db";
+import User from "../../lib/models/user";
 import { client, INSERT_USER_ONE } from "../../lib/server/graphql";
 
-type Data = {
-  name: string;
-};
+type Data = {};
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   const { email, name, password, role } = req.body;
+  try {
+    console.log("CONNECTING MONGO");
 
-  const response = client.mutate({
-    mutation: INSERT_USER_ONE,
-    variables: {
+    await connectDb();
+    console.log("CONNECTED MONGO");
+
+    const newUser = new User({
       email,
       name,
       password,
       role,
-    },
-  });
-  console.log({ response });
-  res.status(200).json({ name: "John Doe" });
+    });
+    const user = await newUser.save();
+    res.json({ message: "User created successfully" });
+  } catch (err) {
+    console.log({ err });
+  }
 }
