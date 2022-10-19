@@ -11,7 +11,7 @@ import {
 interface User {
   email: string;
   name: string;
-  id: string;
+  _id: string;
   role: string;
 }
 interface Auth {
@@ -60,14 +60,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           console.log({ response });
           const {
             data: {
-              data: { id, email, name, role },
+              data: { _id, email, name, role },
               isVerified,
             },
           } = response;
-          console.log({ id, email, name, role, isVerified });
+          console.log({ _id, email, name, role, isVerified });
           if (isVerified) {
             console.log("here");
-            setUser({ email, name, role, id } as User);
+            setUser({ email, name, role, _id } as User);
             setLoggedIn(true);
             if (router.pathname === "/") router.push("/annotation");
           } else {
@@ -106,10 +106,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (status === "FAILED") {
         return { status, message };
       }
-      const { name, id, role, token } = data;
+      const { name, _id, role, token } = data;
       localStorage.setItem("token", token);
       setLoggedIn(true);
-      setUser({ email, name, id, role } as User);
+      setUser({ email, name, _id, role } as User);
       if (role === "admin") {
         router.push(`/${role}`);
       } else {

@@ -1,11 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import readlineiter from "readlineiter";
+import connectDb from "../../lib/db";
 import Dataset from "../../lib/models/dataset";
-import {
-  client,
-  INSERT_DATASETS,
-  INSERT_TEST_DATASETS,
-} from "../../lib/server/graphql";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -40,9 +36,13 @@ export default async function handler(
 
   const { sentence, tag_sentence } = req.body;
   try {
+    await connectDb();
+    const seq = await Dataset.count();
+    console.log({ seq });
+
     const newData = new Dataset({
+      serial_no: seq + 1,
       sentence,
-      tag_sentence,
     });
     const data = await newData.save();
     res.json({ message: "Data created successfully" });

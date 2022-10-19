@@ -49,15 +49,21 @@ const Annotation = ({ sentence }) => {
   const handleAnnotatedData = () => {};
 
   const handleNext = async () => {
+    console.log({ user });
+
     console.log({ tags });
-    // const response = await axios.post("/api/dataset/update-tag-sentence", {
-    //   tags,
-    //   sen_id: sentence._id,
-    //   user_id: user.id,
-    // });
+    const response = await axios.post("/api/dataset/update-tag-sentence", {
+      tags,
+      sen_id: value.data._id,
+      user_id: user._id,
+    });
+    console.log({ response });
+
     const result = await axios.get("/api/dataset/get-sentence");
     console.log({ result });
     setValue(result.data);
+    setTags([]);
+    setTagid([]);
   };
 
   return (
@@ -87,44 +93,55 @@ const Annotation = ({ sentence }) => {
           },
         })}
       >
-        <div style={{ border: "1px solid black", padding: "1rem" }}>
-          {value && (value.data !== null ? value.data.sentence : value.message)}
-        </div>
-        <div style={{ marginTop: "2rem" }}>
-          <Grid grow>
-            {tokens.map((token) => (
-              <Grid.Col span={4} key={token.id}>
-                <Card>
-                  <Card.Section>
-                    <Text>{token.word}</Text>
-                  </Card.Section>
-                  <Card.Section>
-                    {token.options.map((op) => (
-                      <Radio
-                        key={op}
-                        value={op}
-                        label={op}
-                        checked={tagId[token.id] === op}
-                        onChange={() => {
-                          setTags({
-                            ...tags,
-                            [token.word]: op,
-                          });
-                          setTagid({
-                            ...tagId,
-                            [token.id]: op,
-                          });
-                        }}
-                      />
+        <div>
+          {value &&
+            (value.data !== null ? (
+              <>
+                <div style={{ border: "1px solid black", padding: "1rem" }}>
+                  {value.data.sentence}
+                </div>
+                <div style={{ marginTop: "2rem" }}>
+                  <Grid grow>
+                    {tokens.map((token) => (
+                      <Grid.Col span={4} key={token.id}>
+                        <Card>
+                          <Card.Section>
+                            <Text>{token.word}</Text>
+                          </Card.Section>
+                          <Card.Section>
+                            {token.options.map((op) => (
+                              <Radio
+                                key={op}
+                                value={op}
+                                label={op}
+                                checked={tagId[token.id] === op}
+                                onChange={() => {
+                                  setTags({
+                                    ...tags,
+                                    [token.word]: op,
+                                  });
+                                  setTagid({
+                                    ...tagId,
+                                    [token.id]: op,
+                                  });
+                                }}
+                              />
+                            ))}
+                          </Card.Section>
+                        </Card>
+                      </Grid.Col>
                     ))}
-                  </Card.Section>
-                </Card>
-              </Grid.Col>
+                  </Grid>
+                  <div style={{ marginTop: "1rem" }}>
+                    <Button onClick={handleNext}> Next</Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div style={{ border: "1px solid black", padding: "1rem" }}>
+                {value.message}
+              </div>
             ))}
-          </Grid>
-          <div style={{ marginTop: "1rem" }}>
-            <Button onClick={handleNext}> Next</Button>
-          </div>
         </div>
       </AppShell>
     </Page>

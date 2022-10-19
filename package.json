@@ -15,6 +15,7 @@
     "@mantine/form": "^5.5.5",
     "@mantine/hooks": "^5.5.5",
     "@mantine/notifications": "^5.5.5",
+    "@types/mongoose": "^5.11.97",
     "axios": "^1.1.2",
     "fetchline": "^1.0.1",
     "getfileline": "^1.0.1",

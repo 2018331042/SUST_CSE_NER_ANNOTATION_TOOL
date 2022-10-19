@@ -20,10 +20,14 @@ export default async function handler(
       console.log({ update_lock });
 
       if (update_lock.modifiedCount === 1) {
-        res.json({ data: data, status: "SUCCESS", message: "successful" });
+        return res.json({
+          data: data,
+          status: "SUCCESS",
+          message: "successful",
+        });
       }
     } else {
-      res.json({ data: null, message: "No unlocked data avalilable" });
+      return res.json({ data: null, message: "No unlocked data avalilable" });
     }
   } catch (err) {
     console.log({ err });
