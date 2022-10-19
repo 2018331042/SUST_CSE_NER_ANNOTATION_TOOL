@@ -7,9 +7,14 @@ import {
   Radio,
   Text,
 } from "@mantine/core";
-import React, { useState } from "react";
+import axios from "axios";
+import { userInfo } from "os";
+import React, { useEffect, useState } from "react";
 import Page from "../components/page";
 import { useAuth } from "../lib/client/contexts/auth";
+import connectDb from "../lib/db";
+import Dataset from "../lib/models/dataset";
+import convertToObj from "../utils/convertToObj";
 
 const options = ["PER", "ORG", "LOC", "others"];
 const tokens = [
@@ -30,10 +35,12 @@ const tokens = [
   },
 ];
 
-const Annotation = () => {
-  const { signOut } = useAuth();
+const Annotation = ({ sentence }) => {
+  const { signOut, user } = useAuth();
   const [tags, setTags] = useState([]);
   const [tagId, setTagid] = useState([]);
+  const [value, setValue] = useState(sentence);
+  console.log({ value });
   const handleLogout = () => {
     const response = signOut();
     console.log({ response });
@@ -41,8 +48,16 @@ const Annotation = () => {
 
   const handleAnnotatedData = () => {};
 
-  const handleNext = () => {
+  const handleNext = async () => {
     console.log({ tags });
+    // const response = await axios.post("/api/dataset/update-tag-sentence", {
+    //   tags,
+    //   sen_id: sentence._id,
+    //   user_id: user.id,
+    // });
+    const result = await axios.get("/api/dataset/get-sentence");
+    console.log({ result });
+    setValue(result.data);
   };
 
   return (
@@ -73,19 +88,7 @@ const Annotation = () => {
         })}
       >
         <div style={{ border: "1px solid black", padding: "1rem" }}>
-          ২০১৩ সালে সান্তোস ছেড়ে বার্সেলোনায় যোগ দেন নেইমার। সেই দলবদল নিয়ে
-          জালিয়াতি ও দুর্নীতির অভিযোগে মামলা করেছিল ব্রাজিলের বিনিয়োগ প্রতিষ্ঠান
-          ডিআইএস। ঘটনার ৯ বছর পর নেইমার এবং আরও ৮ জনের বিচার কাল শুরু হয়
-          বার্সেলোনার আদালতে। সেই মামলার বিচারে বার্সেলোনার প্রাদেশিক আদালতে
-          হাজিরা দিয়েছেন পিএসজির এই ব্রাজিলিয়ান তারকা। নেইমারের সঙ্গে এই মামলার
-          বিবাদীপক্ষে আছেন তাঁর মা–বাবা, দুই ক্লাব বার্সেলোনা ও সান্তোস এবং
-          ক্লাব দুটির সাবেক তিন সভাপতি। বার্সার সাবেক দুই সভাপতি জোসেপ মারিয়া
-          বার্তোমেউ, স্যান্দ্রো রসেল এবং সান্তোসের সাবেক সভাপতি ওদিলো রদ্রিগেজ।
-          মামলায় ডিআইএসের অভিযোগ, ব্রাজিলিয়ান ক্লাবটি থেকে নেইমারের বার্সেলোনায়
-          যোগদানে দলবদলের আসল অঙ্কটা প্রকাশ করা হয়নি। এতে ডিআইএস স্বত্ব অনুযায়ী
-          যে টাকাটা পাওয়ার কথা ছিল, তা পায়নি, কম পেয়েছে। পিএসজি তারকা নেইমার এ
-          অভিযোগ অস্বীকার করে ২০১৭ সালে স্পেনের উচ্চ আদালতে আপিল করে হেরে যান।
-          তারপর এই বিচারের প্রক্রিয়া শুরু করা হয়।
+          {value && (value.data !== null ? value.data.sentence : value.message)}
         </div>
         <div style={{ marginTop: "2rem" }}>
           <Grid grow>
@@ -129,3 +132,16 @@ const Annotation = () => {
 };
 
 export default Annotation;
+
+export async function getServerSideProps() {
+  await connectDb();
+  const { data } = await axios.get(
+    "http://localhost:3000/api/dataset/get-sentence"
+  );
+  console.log({ data });
+  return {
+    props: {
+      sentence: data,
+    },
+  };
+}

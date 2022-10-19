@@ -1,13 +1,19 @@
-import { PasswordInput } from "@mantine/core";
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+interface IUSER {
+  email: string;
+  name: string;
+  password: string;
+  role: string;
+}
+
+const userSchema = new mongoose.Schema<IUSER>({
   email: { type: String, required: true },
   name: { type: String, required: true },
   password: { type: String, required: true },
   role: { type: String, required: true },
 });
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model<IUSER>("User", userSchema);
 
 export default User;
