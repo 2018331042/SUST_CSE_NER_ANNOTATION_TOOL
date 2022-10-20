@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+import connectDb from "../../../lib/db";
 import User from "../../../lib/models/user";
 type Data = {
   status: String;
@@ -19,6 +20,7 @@ export default async function handler(
   console.log("verifying");
   console.log(token);
   try {
+    await connectDb();
     const data = jwt.verify(
       token,
       process.env.JWT_SECRET
