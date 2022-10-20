@@ -3,31 +3,16 @@ import React from "react";
 import Page from "../components/page";
 import { Table } from "@mantine/core";
 import AnnotatorNavbar from "../components/annotatorNavbar";
+import Dataset from "../lib/models/dataset";
+import mongoose from "mongoose";
 
-const elements = [
-  {
-    sentence: "Fahim sust",
-    tags: {
-      PER: "Fahim",
-      ORG: "sust",
-      PER1: "Fahim",
-      PER2: "Fahim",
-      PER3: "Fahim",
-      PER4: "Fahim",
-      PER5: "Fahim",
-      PER6: "Fahim",
-      PER7: "Fahim",
-    },
-  },
-  { sentence: "Fahim sust", tags: { PER: "Fahim", ORG: "sust" } },
-  { sentence: "Fahim sust", tags: { PER: "Fahim", ORG: "sust" } },
-];
+const AnnotatedData = ({ taggedSentences }) => {
+  console.log({ taggedSentences });
 
-const AnnotatedData: NextPage = () => {
-  const rows = elements.map((element) => (
+  const rows = taggedSentences.map((taggedSentence: any) => (
     <tr>
-      <td>{element.sentence}</td>
-      <td>{JSON.stringify(element.tags, null, 6)}</td>
+      <td>{taggedSentence.sentence}</td>
+      <td>{JSON.stringify(taggedSentence.tags, null, 6)}</td>
     </tr>
   ));
 
@@ -49,3 +34,25 @@ const AnnotatedData: NextPage = () => {
 };
 
 export default AnnotatedData;
+
+export async function getServerSideProps(ctx: any) {
+  const userId = ctx.query.id;
+  console.log({ userId });
+
+  const taggedSentence = await Dataset.find({
+    user_id: userId,
+  });
+  const result = taggedSentence.map((tag: any) => {
+    return {
+      sentence: tag.sentence,
+      tags: tag.tag_sentence,
+    };
+  });
+  console.log({ result });
+
+  return {
+    props: {
+      taggedSentences: result,
+    },
+  };
+}
