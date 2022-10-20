@@ -14,6 +14,7 @@ import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
 import { useAuth } from "../lib/client/contexts/auth";
 import connectDb from "../lib/db";
+import { webSiteUrl } from "../utils/urls";
 
 const options = ["PER", "ORG", "LOC", "others"];
 const tokens = [
@@ -121,9 +122,10 @@ export default Annotation;
 
 export async function getServerSideProps() {
   await connectDb();
-  const { data } = await axios.get(
-    "http://localhost:3000/api/dataset/get-sentence"
-  );
+
+  console.log({ webSiteUrl });
+
+  const { data } = await axios.get(`${webSiteUrl}/api/dataset/get-sentence`);
   console.log({ data });
   return {
     props: {
