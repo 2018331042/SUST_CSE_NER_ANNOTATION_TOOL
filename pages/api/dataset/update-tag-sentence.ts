@@ -6,15 +6,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { tags, sen_id, user_id } = req.body;
-  console.log({ user_id, sen_id });
+  const { tags, sen_id } = req.body;
+  console.log({ sen_id });
 
   try {
     await connectDb();
 
     const response = await Dataset.updateOne(
       { _id: sen_id },
-      { $set: { tag_sentence: tags, user_id: user_id } }
+      { $set: { tag_sentence: tags, isAnnotated: true } }
     );
 
     console.log({ response });

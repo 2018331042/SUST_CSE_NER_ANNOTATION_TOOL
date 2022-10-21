@@ -9,12 +9,13 @@ import {
 } from "@mantine/core";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
 import { useAuth } from "../lib/client/contexts/auth";
 import connectDb from "../lib/db";
 import { webSiteUrl } from "../utils/urls";
+import jwt from "jsonwebtoken";
 
 const options = ["PER", "ORG", "LOC", "others"];
 const tokens = [
@@ -36,24 +37,40 @@ const tokens = [
 ];
 
 const Annotation = ({ sentence }) => {
-  const { user } = useAuth();
   const [tags, setTags] = useState([]);
   const [tagId, setTagid] = useState([]);
   const [value, setValue] = useState(sentence);
+  // const [sentence, setSentence] = useState("");
   console.log({ value });
 
-  const handleNext = async () => {
-    console.log({ user });
+  // useEffect(() => {
+  //   const sentence = JSON.parse(localStorage.getItem("sentence"));
+  //   console.log({ sentence });
 
+  //   if (sentence !== null) {
+  //     setValue(sentence);
+  //     return;
+  //   }
+  //   (async () => {
+  //     const result = await axios.get("/api/dataset/get-sentence");
+  //     console.log({ result });
+  //     localStorage.setItem("sentence", JSON.stringify(result.data));
+  //     setValue(result.data);
+  //   })();
+  // }, []);
+
+  const handleNext = async () => {
     console.log({ tags });
     const response = await axios.post("/api/dataset/update-tag-sentence", {
       tags,
       sen_id: value.data._id,
-      user_id: user._id,
+      token: localStorage.getItem("token"),
     });
     console.log({ response });
 
-    const result = await axios.get("/api/dataset/get-sentence");
+    const result = await axios.post("/api/dataset/get-sentence", {
+      token: localStorage.getItem("token"),
+    });
     console.log({ result });
     setValue(result.data);
     setTags([]);
@@ -120,12 +137,15 @@ const Annotation = ({ sentence }) => {
 
 export default Annotation;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   await connectDb();
-
-  console.log({ webSiteUrl });
-
-  const { data } = await axios.get(`${webSiteUrl}/api/dataset/get-sentence`);
+  // console.log({ token: localStorage.getItem("token") });
+  // console.log({ cookie: ctx.req });
+  const { token } = ctx.req.cookies;
+  console.log({ token });
+  const { data } = await axios.post(`${webSiteUrl}/api/dataset/get-sentence`, {
+    token,
+  });
   console.log({ data });
   return {
     props: {

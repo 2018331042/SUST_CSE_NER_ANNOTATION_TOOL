@@ -5,6 +5,7 @@ const datasetSchema = new mongoose.Schema({
   sentence: { type: String, required: true },
   lock: { type: Boolean, required: true, default: false },
   tag_sentence: { type: Object, required: true, default: {} },
+  isAnnotated: { type: Boolean, required: true, default: false },
   timestamp: { type: Date, default: Date.now },
   user_id: { type: Schema.Types.ObjectId, ref: "User", default: null },
 });

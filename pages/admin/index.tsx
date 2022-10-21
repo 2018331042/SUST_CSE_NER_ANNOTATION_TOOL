@@ -112,7 +112,7 @@ export async function getServerSideProps() {
         as: "user",
       },
     },
-    { $match: { lock: true } },
+    { $match: { lock: true, isAnnotated: true } },
   ]);
   console.log({ annotatedData });
   const data = annotatedData.map((e) => {

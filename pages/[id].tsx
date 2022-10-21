@@ -41,6 +41,7 @@ export async function getServerSideProps(ctx: any) {
 
   const taggedSentence = await Dataset.find({
     user_id: userId,
+    isAnnotated: true,
   });
   const result = taggedSentence.map((tag: any) => {
     return {
