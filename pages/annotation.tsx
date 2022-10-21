@@ -18,46 +18,26 @@ import { webSiteUrl } from "../utils/urls";
 import jwt from "jsonwebtoken";
 
 const options = ["PER", "ORG", "LOC", "others"];
-const tokens = [
-  {
-    id: 1,
-    word: "বার্সেলোনায়",
-    options,
-  },
-  {
-    id: 2,
-    word: "অনুযায়ী",
-    options,
-  },
-  {
-    id: 3,
-    word: "বার্সেলোনায়",
-    options,
-  },
-];
-
 const Annotation = ({ sentence }) => {
   const [tags, setTags] = useState([]);
   const [tagId, setTagid] = useState([]);
   const [value, setValue] = useState(sentence);
-  // const [sentence, setSentence] = useState("");
-  console.log({ value });
+  const [tokens, setTokens] = useState([]);
+  const [numberOfWords, setNumberOfWords] = useState<Number>(0);
 
-  // useEffect(() => {
-  //   const sentence = JSON.parse(localStorage.getItem("sentence"));
-  //   console.log({ sentence });
-
-  //   if (sentence !== null) {
-  //     setValue(sentence);
-  //     return;
-  //   }
-  //   (async () => {
-  //     const result = await axios.get("/api/dataset/get-sentence");
-  //     console.log({ result });
-  //     localStorage.setItem("sentence", JSON.stringify(result.data));
-  //     setValue(result.data);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    console.log({ value });
+    const words = value.data.sentence.split(" ");
+    const wordsObject = words.map((e, idx) => {
+      return {
+        id: idx + 1,
+        word: e,
+      };
+    });
+    console.log({ wordsObject });
+    setTokens(wordsObject);
+    setNumberOfWords(words.length);
+  }, []);
 
   const handleNext = async () => {
     console.log({ tags });
@@ -96,7 +76,7 @@ const Annotation = ({ sentence }) => {
                             <Text>{token.word}</Text>
                           </Card.Section>
                           <Card.Section>
-                            {token.options.map((op) => (
+                            {options.map((op) => (
                               <Radio
                                 key={op}
                                 value={op}
@@ -119,9 +99,11 @@ const Annotation = ({ sentence }) => {
                       </Grid.Col>
                     ))}
                   </Grid>
-                  <div style={{ marginTop: "1rem" }}>
-                    <Button onClick={handleNext}> Next</Button>
-                  </div>
+                  {Object.keys(tags).length === numberOfWords && (
+                    <div style={{ marginTop: "1rem" }}>
+                      <Button onClick={handleNext}> Next</Button>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (

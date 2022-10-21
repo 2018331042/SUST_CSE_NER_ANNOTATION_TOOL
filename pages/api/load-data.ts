@@ -6,47 +6,36 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // const lineIterator = readlineiter("test_data.txt");
-  // // This is the same as:
-  // // fetchline(
-  // //   'https://raw.githubusercontent.com/tomchen/fetchline/main/testfile/crlf_finalnewline',
-  // //   {
-  // //     includeLastEmptyLine: true,
-  // //     encoding: 'utf-8',
-  // //     delimiter: /\r?\n/g,
-  // //   }
-  // // )
-  // (async () => {
-  //   for await (const line of lineIterator) {
-  //     // do something with `line`
-  //     console.log(line);
-  //     try {
-  //       const resp = await client.mutate({
-  //         mutation: INSERT_TEST_DATASETS,
-  //         variables: {
-  //           sentence: line,
-  //         },
-  //       });
-  //       console.log({ resp: resp.data });
-  //     } catch (err) {
-  //       console.log({ err });
-  //     }
+  const lineIterator = readlineiter("input.txt");
+  // This is the same as:
+  // fetchline(
+  //   'https://raw.githubusercontent.com/tomchen/fetchline/main/testfile/crlf_finalnewline',
+  //   {
+  //     includeLastEmptyLine: true,
+  //     encoding: 'utf-8',
+  //     delimiter: /\r?\n/g,
   //   }
-  // })();
+  // )
+  (async () => {
+    for await (const line of lineIterator) {
+      // do something with `line`
+      console.log(line);
+      try {
+        await connectDb();
+        const seq = await Dataset.count();
+        console.log({ seq });
 
-  const { sentence, tag_sentence } = req.body;
-  try {
-    await connectDb();
-    const seq = await Dataset.count();
-    console.log({ seq });
+        const newData = new Dataset({
+          serial_no: seq + 1,
+          sentence: line,
+        });
+        const data = await newData.save();
+        res.json({ message: "Data created successfully" });
+      } catch (err) {
+        console.log({ err });
+      }
+    }
+  })();
 
-    const newData = new Dataset({
-      serial_no: seq + 1,
-      sentence,
-    });
-    const data = await newData.save();
-    res.json({ message: "Data created successfully" });
-  } catch (err) {
-    console.log({ err });
-  }
+  // const { sentence, tag_sentence } = req.body;
 }

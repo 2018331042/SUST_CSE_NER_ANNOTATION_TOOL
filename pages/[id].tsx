@@ -4,7 +4,6 @@ import Page from "../components/page";
 import { Table } from "@mantine/core";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import Dataset from "../lib/models/dataset";
-import mongoose from "mongoose";
 
 const AnnotatedData = ({ taggedSentences }) => {
   console.log({ taggedSentences });
