@@ -69,7 +69,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             console.log("here");
             setUser({ email, name, role, _id } as User);
             setLoggedIn(true);
-            if (router.pathname === "/") router.push("/annotation");
+            if (
+              (router.pathname === "/" ||
+                router.pathname.startsWith("/admin")) &&
+              role === "annotator"
+            ) {
+              router.push("/annotation");
+            }
+            if (
+              (router.pathname === "/" ||
+                router.pathname.startsWith("/annotation")) &&
+              role === "admin"
+            ) {
+              router.push("/admin");
+            }
           } else {
             setUser(null);
             setLoggedIn(false);

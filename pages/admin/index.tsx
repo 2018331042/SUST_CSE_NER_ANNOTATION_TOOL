@@ -2,6 +2,7 @@ import { Button, NumberInput, Table, Text, TextInput } from "@mantine/core";
 import Link from "next/link";
 import React, { useState } from "react";
 import Page from "../../components/page";
+import { useAuth } from "../../lib/client/contexts/auth";
 import connectDb from "../../lib/db";
 import Dataset from "../../lib/models/dataset";
 
@@ -9,6 +10,7 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
   const [fromValue, setFromValue] = useState(0);
   const [toValue, setToValue] = useState(0);
   const [tagSentences, setTagSentences] = useState(data);
+  const { isLoading } = useAuth();
   console.log({ data });
 
   const rows = tagSentences.map((element) => (
@@ -44,6 +46,7 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
       setTagSentences(filterdAnnotatedData);
     }
   };
+
   return (
     <Page>
       <div>
