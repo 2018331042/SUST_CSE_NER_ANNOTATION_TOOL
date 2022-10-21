@@ -5,6 +5,8 @@ import { useAuth } from "../lib/client/contexts/auth";
 const AnnotatorNavbar = ({ children }) => {
   const router = useRouter();
   const { user, signOut } = useAuth();
+  console.log({ user });
+
   const handleLogout = () => {
     const response = signOut();
     console.log({ response });
@@ -27,7 +29,7 @@ const AnnotatorNavbar = ({ children }) => {
             variant="subtle"
             fullWidth
             size="xl"
-            onClick={() => router.push(`/${user._id}`)}
+            onClick={() => router.push(`/${user.id}`)}
           >
             Annotated Data
           </Button>

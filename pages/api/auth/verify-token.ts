@@ -21,16 +21,13 @@ export default async function handler(
   console.log(token);
   try {
     await connectDb();
-    const data = jwt.verify(
-      token,
-      process.env.JWT_SECRET
-    ) as jwtPayload;
+    const data = jwt.verify(token, process.env.JWT_SECRET) as jwtPayload;
     console.log({ data });
-    const user = await User.findById({_id:data.id});
+    const user = await User.findById({ _id: data.id });
 
-    console.log({user});
-    
-    if(user){
+    console.log({ user });
+
+    if (user) {
       res.status(200).json({
         status: "success",
         message: "user found",
@@ -38,7 +35,6 @@ export default async function handler(
         isVerified: true,
       });
     }
-   
   } catch (err) {
     res.status(200).json({
       status: "failed",

@@ -36,8 +36,10 @@ const AnnotatedData = ({ taggedSentences }) => {
 export default AnnotatedData;
 
 export async function getServerSideProps(ctx: any) {
+  console.log({ ctx });
+
   const userId = ctx.query.id;
-  console.log({ userId });
+  // console.log({ userId });
 
   const taggedSentence = await Dataset.find({
     user_id: userId,

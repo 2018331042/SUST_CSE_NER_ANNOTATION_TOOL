@@ -11,7 +11,7 @@ import {
 interface User {
   email: string;
   name: string;
-  _id: string;
+  id: string;
   role: string;
 }
 interface Auth {
@@ -64,10 +64,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               isVerified,
             },
           } = response;
-          console.log({ _id, email, name, role, isVerified });
+          const id = _id.toString();
+          console.log({ id, email, name, role, isVerified });
           if (isVerified) {
             console.log("here");
-            setUser({ email, name, role, _id } as User);
+            setUser({ email, name, role, id } as User);
             setLoggedIn(true);
             if (
               (router.pathname === "/" ||
@@ -119,10 +120,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (status === "FAILED") {
         return { status, message };
       }
-      const { name, _id, role, token } = data;
+      const { name, id, role, token } = data;
       localStorage.setItem("token", token);
       setLoggedIn(true);
-      setUser({ email, name, _id, role } as User);
+      setUser({ email, name, id, role } as User);
       if (role === "admin") {
         router.push(`/${role}`);
       } else {
