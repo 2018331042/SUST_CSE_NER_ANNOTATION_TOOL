@@ -12,10 +12,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
-import { useAuth } from "../lib/client/contexts/auth";
 import connectDb from "../lib/db";
 import { webSiteUrl } from "../utils/urls";
-import jwt from "jsonwebtoken";
 
 const options = ["PER", "ORG", "LOC", "others"];
 const Annotation = ({ sentence }) => {
@@ -34,10 +32,10 @@ const Annotation = ({ sentence }) => {
         word: e,
       };
     });
-    console.log({ wordsObject });
+    console.log({ words: words.length });
     setTokens(wordsObject);
     setNumberOfWords(words.length);
-  }, []);
+  }, [value.data.sentence]);
 
   const handleNext = async () => {
     console.log({ tags });
@@ -99,11 +97,18 @@ const Annotation = ({ sentence }) => {
                       </Grid.Col>
                     ))}
                   </Grid>
-                  {Object.keys(tags).length === numberOfWords && (
-                    <div style={{ marginTop: "1rem" }}>
-                      <Button onClick={handleNext}> Next</Button>
+                  <div
+                    style={{ display: "flex", marginTop: "1rem", gap: "1rem" }}
+                  >
+                    {Object.keys(tagId).length === numberOfWords && (
+                      <div>
+                        <Button onClick={handleNext}> Next</Button>
+                      </div>
+                    )}
+                    <div>
+                      <Button>Skip</Button>
                     </div>
-                  )}
+                  </div>
                 </div>
               </>
             ) : (

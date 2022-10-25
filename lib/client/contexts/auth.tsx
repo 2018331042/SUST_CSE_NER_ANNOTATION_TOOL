@@ -26,7 +26,7 @@ interface Auth {
 }
 
 const AuthContext = createContext<Auth>({
-  isLoading: false,
+  isLoading: true,
   isLoggedIn: false,
   user: null,
   signIn: (email: string, password: string) =>

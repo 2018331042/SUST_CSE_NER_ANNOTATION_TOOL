@@ -10,7 +10,7 @@ interface Values {
   password: string;
 }
 function Signin() {
-  const { signIn } = useAuth();
+  const { signIn, isLoading } = useAuth();
 
   const form = useForm({
     initialValues: {
@@ -30,6 +30,7 @@ function Signin() {
     const response = await signIn(email, password);
     console.log({ response });
   };
+  console.log({ isLoading });
 
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
