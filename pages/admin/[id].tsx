@@ -19,7 +19,7 @@ const AnnotatedData = ({ taggedSentences }) => {
   return (
     <Page>
       <div style={{ marginBottom: "2rem" }}>
-        <Button onClick={() => router.push("/admin")}>Back To Home</Button>
+        <Button onClick={() => router.back()}>Back</Button>
       </div>
       <Table withColumnBorders highlightOnHover withBorder>
         <thead>

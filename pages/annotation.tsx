@@ -54,6 +54,7 @@ const Annotation = ({ sentence }) => {
     setTags([]);
     setTagid([]);
   };
+  console.log({ tags });
 
   return (
     <Page>
@@ -100,9 +101,13 @@ const Annotation = ({ sentence }) => {
                   <div
                     style={{ display: "flex", marginTop: "1rem", gap: "1rem" }}
                   >
-                    {Object.keys(tagId).length === numberOfWords && (
+                    {Object.keys(tagId).length === numberOfWords ? (
                       <div>
                         <Button onClick={handleNext}> Next</Button>
+                      </div>
+                    ) : (
+                      <div>
+                        <Button disabled> Next</Button>
                       </div>
                     )}
                     <div>
@@ -124,7 +129,7 @@ const Annotation = ({ sentence }) => {
 
 export default Annotation;
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx: any) {
   await connectDb();
   // console.log({ token: localStorage.getItem("token") });
   // console.log({ cookie: ctx.req });
