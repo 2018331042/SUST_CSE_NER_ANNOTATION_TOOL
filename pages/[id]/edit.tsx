@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Page from "../../components/page";
 import Dataset from "../../lib/models/dataset";
-const options = ["PER", "ORG", "LOC", "others"];
+import { tagOptions } from "../../utils/const";
 const Edit = ({ sentence }) => {
   const [tags, setTags] = useState(sentence.tags);
   const [tagId, setTagid] = useState([]);
@@ -61,7 +61,7 @@ const Edit = ({ sentence }) => {
                         <Text>{token.word}</Text>
                       </Card.Section>
                       <Card.Section>
-                        {options.map((op) => (
+                        {tagOptions.map((op) => (
                           <Radio
                             key={op}
                             value={op}

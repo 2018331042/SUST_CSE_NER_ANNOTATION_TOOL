@@ -13,9 +13,9 @@ import React, { useEffect, useState } from "react";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
 import connectDb from "../lib/db";
+import { tagOptions } from "../utils/const";
 import { webSiteUrl } from "../utils/urls";
 
-const options = ["PER", "ORG", "LOC", "others"];
 const Annotation = ({ sentence }) => {
   const [tags, setTags] = useState([]);
   const [tagId, setTagid] = useState([]);
@@ -24,17 +24,27 @@ const Annotation = ({ sentence }) => {
   const [numberOfWords, setNumberOfWords] = useState<Number>(0);
 
   useEffect(() => {
-    console.log({ value });
-    const words = value.data.sentence.split(" ");
-    const wordsObject = words.map((e, idx) => {
-      return {
-        id: idx + 1,
-        word: e,
-      };
-    });
-    console.log({ words: words.length });
-    setTokens(wordsObject);
-    setNumberOfWords(words.length);
+    (async () => {
+      console.log({ value });
+      try {
+        const response = await axios.post("/api/dataset/get-sentence-tokens", {
+          sentence: value.data.sentence,
+        });
+        console.log({ response: response.data });
+        const words = response.data.data;
+        const wordsObject = words.map((e, idx) => {
+          return {
+            id: idx + 1,
+            word: e,
+          };
+        });
+        console.log({ words: words.length });
+        setTokens(wordsObject);
+        setNumberOfWords(words.length);
+      } catch (err) {
+        console.log({ err });
+      }
+    })();
   }, [value.data.sentence]);
 
   const handleNext = async () => {
@@ -61,7 +71,7 @@ const Annotation = ({ sentence }) => {
       <AnnotatorNavbar>
         <div>
           {value &&
-            (value.data !== null ? (
+            (value.data !== "" ? (
               <>
                 <div style={{ border: "1px solid black", padding: "1rem" }}>
                   {value.data.sentence}
@@ -75,7 +85,7 @@ const Annotation = ({ sentence }) => {
                             <Text>{token.word}</Text>
                           </Card.Section>
                           <Card.Section>
-                            {options.map((op) => (
+                            {tagOptions.map((op) => (
                               <Radio
                                 key={op}
                                 value={op}

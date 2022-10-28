@@ -46,7 +46,7 @@ export default async function handler(
           });
         }
       } else {
-        return res.json({ data: null, message: "No unlocked data avalilable" });
+        return res.json({ data: "", message: "No unlocked data avalilable" });
       }
     }
   } catch (err) {
