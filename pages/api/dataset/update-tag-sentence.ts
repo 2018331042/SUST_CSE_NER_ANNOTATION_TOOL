@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import connectDb from "../../../lib/db";
 import Dataset from "../../../lib/models/dataset";
+import { skippedTags } from "../../../utils/skippedTags";
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,7 +23,7 @@ export default async function handler(
     } else {
       response = await Dataset.updateOne(
         { _id: sen_id },
-        { $set: { tag_sentence: tags, isAnnotated: true } }
+        { $set: { tag_sentence: tags, isAnnotated: true, isSkipped: false } }
       );
     }
 
@@ -46,9 +47,3 @@ export default async function handler(
     });
   }
 }
-
-const skippedTags = (tags: Object) => {
-  const values = Object.values(tags);
-  console.log({ values });
-  return values.includes("SKIP");
-};

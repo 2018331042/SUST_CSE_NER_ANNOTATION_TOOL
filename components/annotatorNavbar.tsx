@@ -33,6 +33,14 @@ const AnnotatorNavbar = ({ children }) => {
           >
             Annotated Data
           </Button>
+          <Button
+            variant="subtle"
+            fullWidth
+            size="xl"
+            onClick={() => router.push("/skip-words")}
+          >
+            Skip Words
+          </Button>
           <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
             Logout
           </Button>
