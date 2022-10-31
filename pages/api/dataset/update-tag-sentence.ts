@@ -8,14 +8,23 @@ export default async function handler(
 ) {
   const { tags, sen_id } = req.body;
   console.log({ sen_id });
+  const isSkip = skippedTags(tags);
+  console.log({ isSkip });
 
   try {
     await connectDb();
-
-    const response = await Dataset.updateOne(
-      { _id: sen_id },
-      { $set: { tag_sentence: tags, isAnnotated: true } }
-    );
+    let response;
+    if (isSkip) {
+      response = await Dataset.updateOne(
+        { _id: sen_id },
+        { $set: { tag_sentence: tags, isAnnotated: true, isSkipped: true } }
+      );
+    } else {
+      response = await Dataset.updateOne(
+        { _id: sen_id },
+        { $set: { tag_sentence: tags, isAnnotated: true } }
+      );
+    }
 
     console.log({ response });
     if (response.modifiedCount === 1) {
@@ -37,3 +46,9 @@ export default async function handler(
     });
   }
 }
+
+const skippedTags = (tags: Object) => {
+  const values = Object.values(tags);
+  console.log({ values });
+  return values.includes("SKIP");
+};

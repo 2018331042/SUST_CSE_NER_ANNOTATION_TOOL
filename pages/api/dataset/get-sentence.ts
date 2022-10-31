@@ -3,23 +3,22 @@ import connectDb from "../../../lib/db";
 import Dataset from "../../../lib/models/dataset";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+import {
+  FIND_LOCKED_SENTENCE_TO_USER,
+  FIND_ONE_SENTENCE,
+  LOCK_SENTENCE_TO_USER,
+} from "../../../lib/server/queries";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { token } = req.body;
-  // console.log({ token });
   const { id } = jwt.verify(token, process.env.JWT_SECRET);
-  // console.log({ id });
 
   try {
     await connectDb();
 
-    const isExistedData = await Dataset.findOne({
-      lock: true,
-      user_id: id,
-      isAnnotated: false,
-    });
+    const isExistedData = await FIND_LOCKED_SENTENCE_TO_USER(id);
 
     console.log({ isExistedData });
 
@@ -28,14 +27,11 @@ export default async function handler(
     }
 
     if (!isExistedData) {
-      const data = await Dataset.findOne({ lock: false }).lean();
+      const data = await FIND_ONE_SENTENCE(id);
       console.log({ data });
 
       if (data) {
-        const update_lock = await Dataset.updateOne(
-          { _id: data._id },
-          { $set: { lock: true, user_id: id } }
-        );
+        const update_lock = await LOCK_SENTENCE_TO_USER(data._id, id);
         console.log({ update_lock });
 
         if (update_lock.modifiedCount === 1) {

@@ -6,8 +6,10 @@ const datasetSchema = new mongoose.Schema({
   lock: { type: Boolean, required: true, default: false },
   tag_sentence: { type: Object, required: true, default: {} },
   isAnnotated: { type: Boolean, required: true, default: false },
+  isSkipped: { type: Boolean, required: true, default: false },
+  skippedBy: [{ type: String }],
   timestamp: { type: Date, default: Date.now },
-  user_id: { type: Schema.Types.ObjectId, ref: "User", default: null },
+  user_id: { type: String, ref: "User", default: null },
 });
 
 const Dataset =

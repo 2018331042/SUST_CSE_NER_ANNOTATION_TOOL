@@ -6,6 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await connectDb();
   const lineIterator = readlineiter("input.txt");
   // This is the same as:
   // fetchline(
@@ -21,7 +22,6 @@ export default async function handler(
       // do something with `line`
       console.log(line);
       try {
-        await connectDb();
         const seq = await Dataset.count();
         console.log({ seq });
 
@@ -30,7 +30,7 @@ export default async function handler(
           sentence: line,
         });
         const data = await newData.save();
-        res.json({ message: "Data created successfully" });
+        //res.json({ message: "Data created successfully" });
       } catch (err) {
         console.log({ err });
       }

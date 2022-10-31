@@ -14,6 +14,7 @@ import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
 import connectDb from "../lib/db";
 import { tagOptions } from "../utils/const";
+import { tokenize } from "../utils/tokenize";
 import { webSiteUrl } from "../utils/urls";
 
 const Annotation = ({ sentence }) => {
@@ -27,11 +28,9 @@ const Annotation = ({ sentence }) => {
     (async () => {
       console.log({ value });
       try {
-        const response = await axios.post("/api/dataset/get-sentence-tokens", {
-          sentence: value.data.sentence,
-        });
-        console.log({ response: response.data });
-        const words = response.data.data;
+        const response = tokenize(value.data.sentence);
+        console.log({ response: response });
+        const words = response;
         const wordsObject = words.map((e, idx) => {
           return {
             id: idx + 1,
@@ -65,6 +64,17 @@ const Annotation = ({ sentence }) => {
     setTagid([]);
   };
   console.log({ tags });
+
+  const handleSkip = async () => {
+    const result = await axios.post("/api/dataset/get-sentence-after-skip", {
+      sen_id: value.data._id,
+      token: localStorage.getItem("token"),
+    });
+    console.log({ result });
+    setValue(result.data);
+    setTags([]);
+    setTagid([]);
+  };
 
   return (
     <Page>
@@ -121,7 +131,7 @@ const Annotation = ({ sentence }) => {
                       </div>
                     )}
                     <div>
-                      <Button>Skip</Button>
+                      <Button onClick={handleSkip}>Skip</Button>
                     </div>
                   </div>
                 </div>
