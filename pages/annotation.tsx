@@ -8,7 +8,6 @@ import {
   Text,
 } from "@mantine/core";
 import axios from "axios";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import Page from "../components/page";
@@ -52,6 +51,7 @@ const Annotation = ({ sentence }) => {
       tags,
       sen_id: value.data._id,
       token: localStorage.getItem("token"),
+      numberOfWords,
     });
     console.log({ response });
 

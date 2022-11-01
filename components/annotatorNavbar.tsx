@@ -41,6 +41,14 @@ const AnnotatorNavbar = ({ children }) => {
           >
             Skip Words
           </Button>
+          <Button
+            variant="subtle"
+            fullWidth
+            size="xl"
+            onClick={() => router.push(`/${user.id}/stats`)}
+          >
+            My Stats
+          </Button>
           <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
             Logout
           </Button>

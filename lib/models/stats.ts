@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const statsSchema = new mongoose.Schema({
-  current_words: { type: Number, required: true, default: 0 },
-  current_sentence: { type: Number, required: true, default: 0 },
-  daily_words: { type: Number, required: true, default: 0 },
-  daily_sentence: { type: Number, required: true, default: 0 },
-  weekly_words: { type: Number, required: true, default: 0 },
-  weekly_sentence: { type: Number, required: true, default: 0 },
+  current_words: { type: Number, required: true },
+  current_sentence: { type: Number, required: true },
+  daily_words: { type: Number, required: true },
+  daily_sentence: { type: Number, required: true },
+  weekly_words: { type: Number, required: true },
+  weekly_sentence: { type: Number, required: true },
   user_id: { type: String, ref: "User" },
 });
 
