@@ -109,8 +109,6 @@ export async function getServerSideProps(ctx: any) {
   const findSentence = await Dataset.findById({ _id: id }).lean();
   console.log(findSentence);
 
-  // const sentence = convertToObj(findSentence);
-
   const sentence = {
     id: findSentence._id.toString(),
     sentence: findSentence.sentence,
