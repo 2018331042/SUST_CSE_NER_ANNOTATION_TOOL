@@ -14,8 +14,24 @@ const AdminNavbar = ({ children }) => {
     <AppShell
       padding="md"
       navbar={
-        <Navbar width={{ base: 250 }} height={500} p="xs">
+        <Navbar width={{ base: 300 }} height={500} p="xs">
           {" "}
+          <Button
+            variant="subtle"
+            size="xl"
+            fullWidth
+            onClick={() => router.push("/admin")}
+          >
+            Annotated Sentence
+          </Button>
+          <Button
+            variant="subtle"
+            size="xl"
+            fullWidth
+            onClick={() => router.push("/admin/annotator-stats")}
+          >
+            User Stats
+          </Button>
           <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
             Logout
           </Button>

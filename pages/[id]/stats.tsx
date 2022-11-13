@@ -9,6 +9,10 @@ const MyStats = ({ data }) => {
     <tr key={element.serial_no}>
       <td>{element.totalWords}</td>
       <td>{element.totalSentences}</td>
+      <td>{element.dailyWords}</td>
+      <td>{element.dailySentences}</td>
+      <td>{element.weeklyWords}</td>
+      <td>{element.weeklySentences}</td>
     </tr>
   ));
   return (
@@ -17,8 +21,12 @@ const MyStats = ({ data }) => {
         <Table withColumnBorders highlightOnHover withBorder>
           <thead>
             <tr>
-              <th>Completed Total Words</th>
-              <th>Completed Total Sentences</th>
+              <th> Total Completed Words</th>
+              <th> Total Completed Sentences</th>
+              <th>words / daily</th>
+              <th>sentences / daily</th>
+              <th>words / weekly</th>
+              <th>sentences / weekly</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
@@ -44,6 +52,8 @@ export async function getServerSideProps(ctx: any) {
         totalSentences: e.current_sentence,
         dailyWords: e.daily_words,
         dailySentences: e.daily_sentence,
+        weeklyWords: e.weekly_words,
+        weeklySentences: e.weekly_sentence,
       };
     });
     return {

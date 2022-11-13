@@ -1,4 +1,5 @@
 import connectDb from "../../lib/db";
+import Stats from "../../lib/models/stats";
 import User from "../../lib/models/user";
 
 export default async function handler(req, res) {
@@ -13,7 +14,9 @@ export default async function handler(req, res) {
       role,
     });
     const user = await newUser.save();
-    res.json({ user });
+    const newStats = new Stats({ user_id: user._id });
+    const stats = await newStats.save();
+    res.json({ user, stats });
   } catch (err) {
     console.log({ err });
 

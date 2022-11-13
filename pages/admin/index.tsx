@@ -8,12 +8,12 @@ import Page from "../../components/page";
 import { useAuth } from "../../lib/client/contexts/auth";
 import connectDb from "../../lib/db";
 import Dataset from "../../lib/models/dataset";
+import { GET_ANNOTATED_DATA_AND_USER_INFO } from "../../lib/server/queries";
 
 const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
   const [fromValue, setFromValue] = useState(0);
   const [toValue, setToValue] = useState(0);
   const [tagSentences, setTagSentences] = useState(data);
-  const { isLoading } = useAuth();
   const router = useRouter();
   console.log({ data });
 
@@ -110,17 +110,7 @@ export default Admin;
 
 export async function getServerSideProps() {
   await connectDb();
-  const annotatedData = await Dataset.aggregate([
-    {
-      $lookup: {
-        from: "users",
-        localField: "user_id",
-        foreignField: "_id",
-        as: "user",
-      },
-    },
-    { $match: { lock: true, isAnnotated: true } },
-  ]);
+  const annotatedData = await GET_ANNOTATED_DATA_AND_USER_INFO();
   console.log({ annotatedData });
   const data = annotatedData.map((e) => {
     return {
