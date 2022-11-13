@@ -32,6 +32,22 @@ const AdminNavbar = ({ children }) => {
           >
             User Stats
           </Button>
+          <Button
+            variant="subtle"
+            size="xl"
+            fullWidth
+            onClick={() => router.push("/admin/skip-words")}
+          >
+            Skip Words
+          </Button>
+          <Button
+            variant="subtle"
+            size="xl"
+            fullWidth
+            onClick={() => router.push("/admin/garbage-data")}
+          >
+            Garbage Words
+          </Button>
           <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
             Logout
           </Button>
