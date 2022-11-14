@@ -38,7 +38,7 @@ const AdminNavbar = ({ children }) => {
             fullWidth
             onClick={() => router.push("/admin/skip-words")}
           >
-            Skip Words
+            Skipped Words
           </Button>
           <Button
             variant="subtle"

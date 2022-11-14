@@ -39,7 +39,7 @@ const AnnotatorNavbar = ({ children }) => {
             size="xl"
             onClick={() => router.push("/skip-words")}
           >
-            Skip Words
+            Skipped Words
           </Button>
           <Button
             variant="subtle"

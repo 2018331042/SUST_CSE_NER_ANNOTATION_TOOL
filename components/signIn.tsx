@@ -1,5 +1,12 @@
 import React from "react";
-import { TextInput, Checkbox, Button, Group, Box } from "@mantine/core";
+import {
+  TextInput,
+  Checkbox,
+  Button,
+  Group,
+  Box,
+  PasswordInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import axios from "axios";
@@ -41,7 +48,7 @@ function Signin() {
           placeholder="your@email.com"
           {...form.getInputProps("email")}
         />
-        <TextInput
+        <PasswordInput
           withAsterisk
           label="Password"
           placeholder="password"
