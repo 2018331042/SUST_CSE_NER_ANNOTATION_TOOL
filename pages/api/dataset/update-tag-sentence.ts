@@ -17,12 +17,28 @@ export default async function handler(
     if (isSkip) {
       response = await Dataset.updateOne(
         { _id: sen_id },
-        { $set: { tag_sentence: tags, isAnnotated: true, isSkipped: true } }
+        {
+          $set: {
+            tag_sentence: tags,
+            isAnnotated: true,
+            isSkipped: true,
+            numberOfTagWords: numberOfWords,
+            timestamp: new Date(),
+          },
+        }
       );
     } else {
       response = await Dataset.updateOne(
         { _id: sen_id },
-        { $set: { tag_sentence: tags, isAnnotated: true, isSkipped: false } }
+        {
+          $set: {
+            tag_sentence: tags,
+            isAnnotated: true,
+            isSkipped: false,
+            numberOfTagWords: numberOfWords,
+            timestamp: new Date(),
+          },
+        }
       );
       if (response.modifiedCount === 1) {
         const get_stats = await Stats.findOne({ user_id: id });

@@ -13,9 +13,8 @@ const AnnotatorNavbar = ({ children }) => {
   };
   return (
     <AppShell
-      padding="md"
       navbar={
-        <Navbar width={{ base: 250 }} height={500} p="xs">
+        <Navbar width={{ base: 250 }} height={500}>
           {" "}
           <Button
             variant="subtle"

@@ -1,36 +1,80 @@
-import { Table } from "@mantine/core";
+import { Badge, Button, Table } from "@mantine/core";
 import React from "react";
 import AnnotatorNavbar from "../../components/annotatorNavbar";
 import Page from "../../components/page";
-import connectDb from "../../lib/db";
+import Dataset from "../../lib/models/dataset";
 import Stats from "../../lib/models/stats";
-const MyStats = ({ data }) => {
-  const rows = data.map((element: any) => (
+import XLSX from "sheetjs-style";
+import * as FileSaver from "file-saver";
+
+const MyStats = ({ dailyData, overAllData }) => {
+  const overAllRows = overAllData.map((element: any) => (
     <tr key={element.serial_no}>
       <td>{element.totalWords}</td>
       <td>{element.totalSentences}</td>
-      <td>{element.dailyWords}</td>
-      <td>{element.dailySentences}</td>
-      <td>{element.weeklyWords}</td>
-      <td>{element.weeklySentences}</td>
     </tr>
   ));
+  const dailyRows = dailyData.map((element: any) => (
+    <tr key={element.serial_no}>
+      <td>{element.Date}</td>
+      <td>{element.sentences}</td>
+      <td>{element.words}</td>
+    </tr>
+  ));
+
+  const handleExport = async () => {
+    const fileType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8";
+    const fileExtension = ".xlsx";
+    const ws = XLSX.utils.json_to_sheet(dailyData);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, "MyDailyData" + fileExtension);
+  };
   return (
     <Page>
       <AnnotatorNavbar>
-        <Table withColumnBorders highlightOnHover withBorder>
-          <thead>
-            <tr>
-              <th> Total Completed Words</th>
-              <th> Total Completed Sentences</th>
-              <th>words / daily</th>
-              <th>sentences / daily</th>
-              <th>words / weekly</th>
-              <th>sentences / weekly</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
+          >
+            <Badge style={{ width: "300px" }} color="teal" size="xl">
+              Overall Statistics
+            </Badge>
+            <Table withColumnBorders highlightOnHover withBorder>
+              <thead>
+                <tr>
+                  <th> Total Completed Words</th>
+                  <th> Total Completed Sentences</th>
+                </tr>
+              </thead>
+              <tbody>{overAllRows}</tbody>
+            </Table>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "2rem",
+            }}
+          >
+            <Badge style={{ width: "300px" }} color="teal" size="xl">
+              Daily Statistics
+            </Badge>
+            <Button onClick={handleExport}>Export To Excel</Button>
+            <Table withColumnBorders highlightOnHover withBorder>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Completed Sentences</th>
+                  <th>Completed Words</th>
+                </tr>
+              </thead>
+              <tbody>{dailyRows}</tbody>
+            </Table>
+          </div>
+        </div>
       </AnnotatorNavbar>
     </Page>
   );
@@ -41,23 +85,42 @@ export default MyStats;
 export async function getServerSideProps(ctx: any) {
   const { id } = ctx.query;
   console.log({ id });
-
   try {
-    await connectDb();
+    const dailyData = await Dataset.aggregate([
+      { $match: { isAnnotated: true, user_id: id } },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } },
+          count: { $sum: 1 },
+          numberOfWords: { $sum: "$numberOfTagWords" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          Date: "$_id",
+          sentences: "$count",
+          words: "$numberOfWords",
+        },
+      },
+    ]);
+    console.log({ dailyData });
+
     const findStats = await Stats.find({ user_id: id });
     console.log({ findStats });
-    const data = findStats.map((e) => {
+    const overAllData = findStats.map((e) => {
       return {
         totalWords: e.current_words,
         totalSentences: e.current_sentence,
-        dailyWords: e.daily_words,
-        dailySentences: e.daily_sentence,
-        weeklyWords: e.weekly_words,
-        weeklySentences: e.weekly_sentence,
       };
     });
+    console.log({ overAllData });
+
     return {
-      props: { data },
+      props: {
+        dailyData,
+        overAllData,
+      },
     };
   } catch (err) {
     console.log({ err });

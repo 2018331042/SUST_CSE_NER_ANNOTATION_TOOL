@@ -6,10 +6,9 @@ import {
   Group,
   Box,
   PasswordInput,
+  Loader,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
-import axios from "axios";
 import { useAuth } from "../lib/client/contexts/auth";
 
 interface Values {
@@ -17,7 +16,11 @@ interface Values {
   password: string;
 }
 function Signin() {
-  const { signIn, isLoading } = useAuth();
+  const { signIn, isLoading, isLoggedIn } = useAuth();
+
+  if (isLoading) {
+    return <Loader variant="bars" />;
+  }
 
   const form = useForm({
     initialValues: {
@@ -37,7 +40,6 @@ function Signin() {
     const response = await signIn(email, password);
     console.log({ response });
   };
-  console.log({ isLoading });
 
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">

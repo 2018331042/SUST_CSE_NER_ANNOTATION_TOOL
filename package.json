@@ -20,6 +20,7 @@
     "axios": "^1.1.2",
     "cookie": "^0.5.0",
     "fetchline": "^1.0.1",
+    "file-saver": "^2.0.5",
     "getfileline": "^1.0.1",
     "gql": "^1.1.2",
     "graphql": "^16.6.0",
@@ -30,6 +31,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "readlineiter": "^1.0.1",
+    "sheetjs-style": "^0.15.8",
     "tabler-icons-react": "^1.55.0"
   },
   "devDependencies": {

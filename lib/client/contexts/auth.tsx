@@ -75,6 +75,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.pathname.startsWith("/admin")) &&
               role === "annotator"
             ) {
+              console.log("404");
+
               router.push("/annotation");
             }
             if (
@@ -144,6 +146,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoggedIn(false);
     setUser(null);
     router.push("/");
+    setLoading(false);
     return { status: "success", message: "logged out" };
   };
 
@@ -151,7 +154,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{ isLoading, isLoggedIn, signIn, user, signOut }}
     >
-      {!isLoading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
