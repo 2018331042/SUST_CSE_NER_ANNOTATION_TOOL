@@ -6,8 +6,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { path } = req.body;
   await connectDb();
-  const lineIterator = readlineiter("input.txt");
+  const lineIterator = readlineiter(path);
   // This is the same as:
   // fetchline(
   //   'https://raw.githubusercontent.com/tomchen/fetchline/main/testfile/crlf_finalnewline',

@@ -48,6 +48,14 @@ const AdminNavbar = ({ children }) => {
           >
             Garbage Words
           </Button>
+          <Button
+            variant="subtle"
+            size="xl"
+            fullWidth
+            onClick={() => router.push("/admin/load-data")}
+          >
+            Load Data
+          </Button>
           <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
             Logout
           </Button>

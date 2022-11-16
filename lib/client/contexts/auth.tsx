@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .post("/api/auth/verify-token", {
           token,
         })
-        .then(async (response) => {
+        .then((response) => {
           console.log({ response });
           const {
             data: {
@@ -75,8 +75,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.pathname.startsWith("/admin")) &&
               role === "annotator"
             ) {
-              console.log("404");
-
               router.push("/annotation");
             }
             if (
@@ -84,7 +82,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.pathname.startsWith("/annotation")) &&
               role === "admin"
             ) {
-              router.push("/admin");
+              console.log(1);
+
+              router.replace("/admin");
             }
           } else {
             setUser(null);
@@ -95,6 +95,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           console.log("error found");
         })
         .finally(() => {
+          console.log("two");
+
           setLoading(false);
         });
     };
@@ -149,12 +151,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
     return { status: "success", message: "logged out" };
   };
+  console.log({ isLoading });
 
   return (
     <AuthContext.Provider
       value={{ isLoading, isLoggedIn, signIn, user, signOut }}
     >
-      {children}
+      {((!isLoading && isLoggedIn && router.pathname !== "/") ||
+        (!isLoading && !isLoggedIn && router.pathname === "/")) &&
+        children}
     </AuthContext.Provider>
   );
 };
