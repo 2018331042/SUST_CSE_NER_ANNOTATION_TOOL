@@ -277,6 +277,13 @@
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-5.5.5.tgz#cffe0080d940e951d69a1496d4a4b8484163711e"
   integrity sha512-qWZAZm203s0knYk6Ut4VPvur9H5BMul02cCb9E09s60iSjnLRHDC3f73VmSzmLZNVfgE+7hXUhguR/1lC7js4Q==
 
+"@mantine/modals@^5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@mantine/modals/-/modals-5.8.0.tgz#df9183f536501b9f412e2386faf6c5b99bac3f30"
+  integrity sha512-AUug+6OS+baJVKaIop2oukC7E2AUv8dR9gpD9yi4c3bBKBP4GpSl91i/BVMWVpd3Zgt4H1PitZLh074fsh4fOA==
+  dependencies:
+    "@mantine/utils" "5.8.0"
+
 "@mantine/notifications@^5.5.5":
   version "5.5.5"
   resolved "https://registry.yarnpkg.com/@mantine/notifications/-/notifications-5.5.5.tgz#ccb4f4441d5ef70bafc027dc83b61c26fae35b74"
@@ -302,6 +309,11 @@
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.7.2.tgz#ae2eb5fd73615aa3d92d41d595a953d5325809e9"
   integrity sha512-LE/ckEX+d1f5GOP1ARNEldUYybOp3Tualx5IYgeV06oyBOaeJaXs9Tco2NTM6j+opZwUbNuYEUmtp4bkArhpOg==
+
+"@mantine/utils@5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.8.0.tgz#daa5a0d88324fdd637971d6c3a0f7e7af4f57985"
+  integrity sha512-gVE4U3apoE53MUWgKqst9H0iWgurzBccZNSSGRv3kD62vAFcI1JJhxxuW7X271bc9IMhKjgezEH14ApH1jlwCA==
 
 "@next/env@12.3.1":
   version "12.3.1"
@@ -2638,6 +2650,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+swr@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-1.3.0.tgz#c6531866a35b4db37b38b72c45a63171faf9f4e8"
+  integrity sha512-dkghQrOl2ORX9HYrMDtPa7LTVHJjCTeZoB1dqTbnnEDlSvN8JEKpYIYurDfvbQFUUS8Cg8PceFVZNkW0KNNYPw==
 
 symbol-observable@^4.0.0:
   version "4.0.0"

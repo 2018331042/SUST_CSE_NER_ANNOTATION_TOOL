@@ -56,6 +56,14 @@ const AdminNavbar = ({ children }) => {
           >
             Load Data
           </Button>
+          <Button
+            variant="subtle"
+            size="xl"
+            fullWidth
+            onClick={() => router.push("/admin/assign-annotator")}
+          >
+            Assign Annotator
+          </Button>
           <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
             Logout
           </Button>

@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { Edit } from "tabler-icons-react";
 import AdminNavbar from "../../components/adminNavbar";
 import Page from "../../components/page";
-import { useAuth } from "../../lib/client/contexts/auth";
 import connectDb from "../../lib/db";
 import Dataset from "../../lib/models/dataset";
 import { GET_ANNOTATED_DATA_AND_USER_INFO } from "../../lib/server/queries";

@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useAuth } from "../lib/client/contexts/auth";
+import { showNotification } from "@mantine/notifications";
 
 interface Values {
   email: string;
@@ -39,6 +40,23 @@ function Signin() {
 
     const response = await signIn(email, password);
     console.log({ response });
+    if (response.status === "success") {
+      console.log("success");
+
+      showNotification({
+        title: "SUCCESSFUL",
+        message: response.message,
+        style: { backgroundColor: "#7bc62d" },
+        color: "white",
+      });
+      return;
+    }
+    showNotification({
+      title: "SUCCESSFUL",
+      message: response.message,
+      style: { backgroundColor: "#7bc62d" },
+      color: "white",
+    });
   };
 
   return (

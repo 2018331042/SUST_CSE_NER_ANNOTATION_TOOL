@@ -39,7 +39,7 @@ export default async function handler(
         res.json({
           data: { email, name, role, id, token },
           status: "SUCCESS",
-          message: "user Found",
+          message: "Login Successful",
         });
       } else {
         res.json({ status: "FAILED", message: "email or password error" });

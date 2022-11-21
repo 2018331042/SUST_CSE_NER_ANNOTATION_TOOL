@@ -49,10 +49,6 @@ export async function getServerSideProps(ctx: any) {
     return {
       current_words: e.current_words,
       current_sentence: e.current_sentence,
-      daily_words: e.daily_words,
-      daily_sentence: e.daily_sentence,
-      weekly_words: e.weekly_words,
-      weekly_sentence: e.weekly_sentence,
       username: e.user[0].name,
     };
   });
