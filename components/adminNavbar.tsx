@@ -14,7 +14,12 @@ const AdminNavbar = ({ children }) => {
     <AppShell
       padding="md"
       navbar={
-        <Navbar width={{ base: 300 }} height={500} p="xs">
+        <Navbar
+          style={{ position: "absolute" }}
+          width={{ base: 300 }}
+          height={500}
+          p="xs"
+        >
           {" "}
           <Button
             variant="subtle"

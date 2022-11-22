@@ -14,6 +14,8 @@ export default async function handler(
   try {
     await connectDb();
     let response;
+    console.log(Date());
+
     if (isSkip) {
       response = await Dataset.updateOne(
         { _id: sen_id },
@@ -23,7 +25,7 @@ export default async function handler(
             isAnnotated: true,
             isSkipped: true,
             numberOfTagWords: numberOfWords,
-            timestamp: new Date(),
+            timestamp: Date(),
           },
         }
       );
@@ -36,7 +38,7 @@ export default async function handler(
             isAnnotated: true,
             isSkipped: false,
             numberOfTagWords: numberOfWords,
-            timestamp: new Date(),
+            timestamp: Date(),
           },
         }
       );
