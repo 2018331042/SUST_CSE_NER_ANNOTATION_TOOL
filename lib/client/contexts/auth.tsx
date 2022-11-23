@@ -1,3 +1,4 @@
+import { Loader } from "@mantine/core";
 import axios from "axios";
 import { useRouter } from "next/router";
 import {
@@ -7,6 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import LoaderBar from "../../../components/loaderbar";
 
 interface User {
   email: string;
@@ -157,9 +159,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{ isLoading, isLoggedIn, signIn, user, signOut }}
     >
-      {((!isLoading && isLoggedIn && router.pathname !== "/") ||
+      {(((!isLoading && isLoggedIn && router.pathname !== "/") ||
         (!isLoading && !isLoggedIn && router.pathname === "/")) &&
-        children}
+        children) || <LoaderBar />}
     </AuthContext.Provider>
   );
 };
