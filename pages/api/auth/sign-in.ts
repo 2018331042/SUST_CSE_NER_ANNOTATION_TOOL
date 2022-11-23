@@ -21,31 +21,42 @@ export default async function handler(
 
     if (user) {
       if (user.password === password) {
-        const { name, role } = user;
-        const token = createToken(role, id, email);
-        console.log(`token: ${token}`);
-        res.setHeader(
-          "Set-Cookie",
-          cookie.serialize("token", token, {
-            httpOnly: false,
-            secure: true, //process.env.NODE_ENV !== "development",
-            maxAge: 60 * 60 * 360,
-            sameSite: "strict",
-            path: "/",
-          })
-        );
-        res.setHeader("Access-Control-Allow-Credentials", true);
+        if (user.isActive === true) {
+          const { name, role } = user;
+          const token = createToken(role, id, email);
+          console.log(`token: ${token}`);
+          res.setHeader(
+            "Set-Cookie",
+            cookie.serialize("token", token, {
+              httpOnly: false,
+              secure: true, //process.env.NODE_ENV !== "development",
+              maxAge: 60 * 60 * 360,
+              sameSite: "strict",
+              path: "/",
+            })
+          );
+          res.setHeader("Access-Control-Allow-Credentials", true);
 
-        res.json({
-          data: { email, name, role, id, token },
-          status: "SUCCESS",
-          message: "Login Successful",
-        });
+          res.json({
+            data: { email, name, role, id, token },
+            status: "SUCCESS",
+            message: "Login Successful",
+          });
+        } else {
+          return res.json({
+            status: "FAILED",
+            message:
+              "Your Account is not active. Please contact with the admin.",
+          });
+        }
       } else {
-        res.json({ status: "FAILED", message: "email or password error" });
+        return res.json({
+          status: "FAILED",
+          message: "email or password error",
+        });
       }
     } else {
-      res.json({ status: "FAILED", message: "user not found" });
+      return res.json({ status: "FAILED", message: "user not found" });
     }
   } catch (err) {
     console.log({ err });

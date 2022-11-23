@@ -1,14 +1,17 @@
-import { Select, Table } from "@mantine/core";
+import { Button, Select, Table } from "@mantine/core";
 import axios from "axios";
 import React, { useState } from "react";
 import useSWR from "swr";
 import AdminNavbar from "../../components/adminNavbar";
 import Page from "../../components/page";
+import XLSX from "sheetjs-style";
+import * as FileSaver from "file-saver";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const AnnotatorStats = () => {
   const [dailyData, setDailyData] = useState([]);
   const [overAllData, setOverAllData] = useState([]);
+  const [annotatorName, setAnnotatorName] = useState("");
   const { data, error } = useSWR("/api/auth/get-annotators", fetcher, {
     refreshInterval: 1000,
   });
@@ -23,6 +26,10 @@ const AnnotatorStats = () => {
   });
 
   const getStats = async (id: String) => {
+    const selectedAnnotator = data.annotators.filter(
+      (annotator) => annotator._id === id
+    );
+    setAnnotatorName(selectedAnnotator[0].name);
     const response = await axios.post("/api/stats/get-annotator-stats", { id });
     console.log({ response });
     setDailyData(response.data.dailyData);
@@ -36,6 +43,17 @@ const AnnotatorStats = () => {
       <td>{e.words}</td>
     </tr>
   ));
+
+  const handleExportExcel = async () => {
+    const fileType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8";
+    const fileExtension = ".xlsx";
+    const ws = XLSX.utils.json_to_sheet(dailyData);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, `${annotatorName}` + fileExtension);
+  };
   return (
     <Page>
       <AdminNavbar>
@@ -47,6 +65,7 @@ const AnnotatorStats = () => {
           placeholder="Select annotator"
           onChange={(value) => getStats(value)}
         ></Select>
+        <Button onClick={handleExportExcel}>Export to Excel</Button>
         <Table withBorder withColumnBorders>
           <thead>
             <tr>
