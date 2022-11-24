@@ -17,7 +17,6 @@ const AnnotatorStats = () => {
     refreshInterval: 1000,
   });
   if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
 
   const selectData = data?.annotators.map((annotator) => {
     return {

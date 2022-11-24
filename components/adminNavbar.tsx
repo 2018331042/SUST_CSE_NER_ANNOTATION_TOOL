@@ -27,7 +27,7 @@ const AdminNavbar = ({ children }) => {
     },
     {
       name: "Garbage Words",
-      url: "/admin/garbage-words",
+      url: "/admin/garbage-data",
     },
     {
       name: "Load Data",
