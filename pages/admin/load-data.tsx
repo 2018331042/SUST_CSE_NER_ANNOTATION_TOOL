@@ -24,20 +24,18 @@ const LoadData = () => {
     });
   };
   return (
-    <Page>
-      <AdminNavbar>
-        <Dropzone onDrop={(files) => handleFile(files)}>
-          <div>
-            <Text size="xl" inline>
-              {text}
-            </Text>
-          </div>
-        </Dropzone>
-        <Button style={{ marginTop: ".2rem" }} onClick={uploadFiles}>
-          Upload
-        </Button>
-      </AdminNavbar>
-    </Page>
+    <AdminNavbar>
+      <Dropzone onDrop={(files) => handleFile(files)}>
+        <div>
+          <Text size="xl" inline>
+            {text}
+          </Text>
+        </div>
+      </Dropzone>
+      <Button style={{ marginTop: ".2rem" }} onClick={uploadFiles}>
+        Upload
+      </Button>
+    </AdminNavbar>
   );
 };
 

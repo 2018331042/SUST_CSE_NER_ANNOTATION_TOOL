@@ -22,21 +22,19 @@ const Skip = ({ data }) => {
     </tr>
   ));
   return (
-    <Page>
-      <AnnotatorNavbar>
-        <Table withColumnBorders highlightOnHover withBorder>
-          <thead>
-            <tr>
-              <th>Serial No</th>
-              <th>Sentence</th>
-              <th>Tags</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </AnnotatorNavbar>
-    </Page>
+    <AnnotatorNavbar>
+      <Table withColumnBorders highlightOnHover withBorder>
+        <thead>
+          <tr>
+            <th>Serial No</th>
+            <th>Sentence</th>
+            <th>Tags</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </AnnotatorNavbar>
   );
 };
 

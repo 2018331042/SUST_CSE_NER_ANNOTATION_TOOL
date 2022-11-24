@@ -33,50 +33,46 @@ const MyStats = ({ dailyData, overAllData }) => {
     FileSaver.saveAs(data, "MyDailyData" + fileExtension);
   };
   return (
-    <Page>
-      <AnnotatorNavbar>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
-          >
-            <Badge style={{ width: "300px" }} color="teal" size="xl">
-              Overall Statistics
-            </Badge>
-            <Table withColumnBorders highlightOnHover withBorder>
-              <thead>
-                <tr>
-                  <th> Total Completed Words</th>
-                  <th> Total Completed Sentences</th>
-                </tr>
-              </thead>
-              <tbody>{overAllRows}</tbody>
-            </Table>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "2rem",
-            }}
-          >
-            <Badge style={{ width: "300px" }} color="teal" size="xl">
-              Daily Statistics
-            </Badge>
-            <Button onClick={handleExport}>Export To Excel</Button>
-            <Table withColumnBorders highlightOnHover withBorder>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Completed Sentences</th>
-                  <th>Completed Words</th>
-                </tr>
-              </thead>
-              <tbody>{dailyRows}</tbody>
-            </Table>
-          </div>
+    <AnnotatorNavbar>
+      <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+          <Badge style={{ width: "300px" }} color="teal" size="xl">
+            Overall Statistics
+          </Badge>
+          <Table withColumnBorders highlightOnHover withBorder>
+            <thead>
+              <tr>
+                <th> Total Completed Words</th>
+                <th> Total Completed Sentences</th>
+              </tr>
+            </thead>
+            <tbody>{overAllRows}</tbody>
+          </Table>
         </div>
-      </AnnotatorNavbar>
-    </Page>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "2rem",
+          }}
+        >
+          <Badge style={{ width: "300px" }} color="teal" size="xl">
+            Daily Statistics
+          </Badge>
+          <Button onClick={handleExport}>Export To Excel</Button>
+          <Table withColumnBorders highlightOnHover withBorder>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Completed Sentences</th>
+                <th>Completed Words</th>
+              </tr>
+            </thead>
+            <tbody>{dailyRows}</tbody>
+          </Table>
+        </div>
+      </div>
+    </AnnotatorNavbar>
   );
 };
 

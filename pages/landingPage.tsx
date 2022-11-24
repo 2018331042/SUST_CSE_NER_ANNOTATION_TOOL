@@ -1,37 +1,55 @@
-import React from "react";
+import { Anchor, Box, Button, Divider, NavLink, Title } from "@mantine/core";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
-const LandingPage = () => {
+const LandingPage = ({ children }) => {
+  const [hover, setHover] = useState(false);
+  const router = useRouter();
+  const selected = (url) => {
+    if (router.pathname === url) {
+      return { backgroundColor: "#526295" };
+    } else {
+      return {};
+    }
+  };
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
           alignItems: "center",
-          height: "100vh",
-          width: "100vw",
-          backgroundColor: "black",
+          flex: 0.8,
+          overflowY: "hidden",
+          backgroundColor: "#43436f",
           color: "white",
         }}
       >
-        <h1 style={{ fontSize: "85px", textAlign: "center" }}>
-          Name Entity Recognizer
-        </h1>
-        <div>@ Powered By CSE, SUST</div>
+        <h2 style={{ textAlign: "center" }}>Name Entity Recognizer</h2>
+        <hr style={{ width: "100%" }} />
+        <Button
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          variant="subtle"
+          fullWidth
+          size="xl"
+          style={{
+            color: "white",
+            ...(hover ? { backgroundColor: "#22c1c3" } : null),
+            ...selected("/annotation"),
+          }}
+        >
+          Annotated Data
+        </Button>
       </div>
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-
-          width: "100vw",
-          height: "100vh",
-        }}
+        style={{ padding: "2rem", overflowY: "auto", height: "100vh", flex: 4 }}
       >
-        <div>Login Form</div>
-        {/* <div>Hello</div> */}
+        {children}
       </div>
     </div>
   );

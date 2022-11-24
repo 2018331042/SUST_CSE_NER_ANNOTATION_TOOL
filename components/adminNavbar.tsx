@@ -1,90 +1,47 @@
-import { AppShell, Button, Navbar } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { useRouter } from "next/router";
+import { userAgent } from "next/server";
 import React from "react";
 import { useAuth } from "../lib/client/contexts/auth";
+import Navbar from "./common/navbar";
 
 const AdminNavbar = ({ children }) => {
   const router = useRouter();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const handleLogout = () => {
     const response = signOut();
   };
+  const items = [
+    {
+      name: "Annotated Sentences",
+      url: "/admin",
+    },
+    {
+      name: "Skipped Words",
+      url: "/admin/skip-words",
+    },
+    {
+      name: "User Stats",
+      url: "/admin/annotator-stats",
+    },
+    {
+      name: "Garbage Words",
+      url: "/admin/garbage-words",
+    },
+    {
+      name: "Load Data",
+      url: "/admin/load-data",
+    },
+    {
+      name: "Assign Annotators",
+      url: "/admin/assign-annotator",
+    },
+  ];
   return (
-    <AppShell
-      padding="md"
-      navbar={
-        <Navbar
-          style={{ position: "absolute" }}
-          width={{ base: 300 }}
-          height={500}
-          p="xs"
-        >
-          {" "}
-          <Button
-            variant="subtle"
-            size="xl"
-            fullWidth
-            onClick={() => router.push("/admin")}
-          >
-            Annotated Sentence
-          </Button>
-          <Button
-            variant="subtle"
-            size="xl"
-            fullWidth
-            onClick={() => router.push("/admin/annotator-stats")}
-          >
-            User Stats
-          </Button>
-          <Button
-            variant="subtle"
-            size="xl"
-            fullWidth
-            onClick={() => router.push("/admin/skip-words")}
-          >
-            Skipped Words
-          </Button>
-          <Button
-            variant="subtle"
-            size="xl"
-            fullWidth
-            onClick={() => router.push("/admin/garbage-data")}
-          >
-            Garbage Words
-          </Button>
-          <Button
-            variant="subtle"
-            size="xl"
-            fullWidth
-            onClick={() => router.push("/admin/load-data")}
-          >
-            Load Data
-          </Button>
-          <Button
-            variant="subtle"
-            size="xl"
-            fullWidth
-            onClick={() => router.push("/admin/assign-annotator")}
-          >
-            Assign Annotator
-          </Button>
-          <Button variant="subtle" size="xl" fullWidth onClick={handleLogout}>
-            Logout
-          </Button>
-        </Navbar>
-      }
-      styles={(theme) => ({
-        main: {
-          backgroundColor:
-            theme.colorScheme === "dark"
-              ? theme.colors.dark[8]
-              : theme.colors.gray[0],
-        },
-      })}
-    >
+    <Navbar items={items} name={user.name} handleLogout={handleLogout}>
       {children}
-    </AppShell>
+    </Navbar>
   );
 };
 

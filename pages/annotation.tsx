@@ -15,6 +15,7 @@ import connectDb from "../lib/db";
 import { tagOptions } from "../utils/const";
 import { tokenize } from "../utils/tokenize";
 import { webSiteUrl } from "../utils/urls";
+import LandingPage from "./landingPage";
 
 const Annotation = ({ sentence }) => {
   const [tags, setTags] = useState([]);
@@ -77,73 +78,71 @@ const Annotation = ({ sentence }) => {
   };
 
   return (
-    <Page>
-      <AnnotatorNavbar>
-        <div>
-          {value &&
-            (value.data !== "" ? (
-              <>
-                <div style={{ border: "1px solid black", padding: "1rem" }}>
-                  {value.data.sentence}
-                </div>
-                <div style={{ marginTop: "2rem" }}>
-                  <Grid grow>
-                    {tokens.map((token) => (
-                      <Grid.Col span={4} key={token.id}>
-                        <Card>
-                          <Card.Section>
-                            <Text>{token.word}</Text>
-                          </Card.Section>
-                          <Card.Section>
-                            {tagOptions.map((op) => (
-                              <Radio
-                                key={op}
-                                value={op}
-                                label={op}
-                                checked={tagId[token.id] === op}
-                                onChange={() => {
-                                  setTags({
-                                    ...tags,
-                                    [token.word]: op,
-                                  });
-                                  setTagid({
-                                    ...tagId,
-                                    [token.id]: op,
-                                  });
-                                }}
-                              />
-                            ))}
-                          </Card.Section>
-                        </Card>
-                      </Grid.Col>
-                    ))}
-                  </Grid>
-                  <div
-                    style={{ display: "flex", marginTop: "1rem", gap: "1rem" }}
-                  >
-                    {Object.keys(tagId).length === numberOfWords ? (
-                      <div>
-                        <Button onClick={handleNext}> Next</Button>
-                      </div>
-                    ) : (
-                      <div>
-                        <Button disabled> Next</Button>
-                      </div>
-                    )}
+    <AnnotatorNavbar>
+      <div>
+        {value &&
+          (value.data !== "" ? (
+            <>
+              <div style={{ border: "1px solid black", padding: "1rem" }}>
+                {value.data.sentence}
+              </div>
+              <div style={{ marginTop: "2rem" }}>
+                <Grid grow>
+                  {tokens.map((token) => (
+                    <Grid.Col span={4} key={token.id}>
+                      <Card>
+                        <Card.Section>
+                          <Text>{token.word}</Text>
+                        </Card.Section>
+                        <Card.Section>
+                          {tagOptions.map((op) => (
+                            <Radio
+                              key={op}
+                              value={op}
+                              label={op}
+                              checked={tagId[token.id] === op}
+                              onChange={() => {
+                                setTags({
+                                  ...tags,
+                                  [token.word]: op,
+                                });
+                                setTagid({
+                                  ...tagId,
+                                  [token.id]: op,
+                                });
+                              }}
+                            />
+                          ))}
+                        </Card.Section>
+                      </Card>
+                    </Grid.Col>
+                  ))}
+                </Grid>
+                <div
+                  style={{ display: "flex", marginTop: "1rem", gap: "1rem" }}
+                >
+                  {Object.keys(tagId).length === numberOfWords ? (
                     <div>
-                      <Button onClick={handleSkip}>Skip</Button>
+                      <Button onClick={handleNext}> Next</Button>
                     </div>
+                  ) : (
+                    <div>
+                      <Button disabled> Next</Button>
+                    </div>
+                  )}
+                  <div>
+                    <Button onClick={handleSkip}>Skip</Button>
                   </div>
                 </div>
-              </>
-            ) : (
-              <div style={{ border: "1px solid black", padding: "1rem" }}>
-                {value.message}
               </div>
-            ))}
-        </div>
-      </AnnotatorNavbar>
-    </Page>
+            </>
+          ) : (
+            <div style={{ border: "1px solid black", padding: "1rem" }}>
+              {value.message}
+            </div>
+          ))}
+      </div>
+    </AnnotatorNavbar>
   );
 };
 

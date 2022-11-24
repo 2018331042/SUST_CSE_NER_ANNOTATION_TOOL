@@ -4,11 +4,7 @@ import AdminNavbar from "../../components/adminNavbar";
 import Page from "../../components/page";
 
 const GarbageData = () => {
-  return (
-    <Page>
-      <AdminNavbar>Garbage List</AdminNavbar>
-    </Page>
-  );
+  return <AdminNavbar>Garbage List</AdminNavbar>;
 };
 
 export default GarbageData;

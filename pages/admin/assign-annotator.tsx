@@ -85,51 +85,49 @@ const AssignAnnotator = () => {
     });
 
   return (
-    <Page>
-      <AdminNavbar>
-        {!data ? (
-          <div>Loading..</div>
-        ) : (
-          <>
-            <h1>Assign New Annotator</h1>
-            <div style={{ maxWidth: "300px" }}>
-              <form onSubmit={form.onSubmit((values) => handlerSubmit(values))}>
-                <TextInput
-                  withAsterisk
-                  label="Name"
-                  {...form.getInputProps("name")}
-                />
-                <TextInput
-                  withAsterisk
-                  label="Email"
-                  placeholder="your@email.com"
-                  {...form.getInputProps("email")}
-                />
-                <PasswordInput
-                  withAsterisk
-                  label="password"
-                  {...form.getInputProps("password")}
-                ></PasswordInput>
-                <Group position="right" mt="md">
-                  <Button type="submit">Submit</Button>
-                </Group>
-              </form>
-            </div>
-            <h3>Annotators List</h3>
-            <Table withBorder withColumnBorders>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>email</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>{rows}</tbody>
-            </Table>
-          </>
-        )}
-      </AdminNavbar>
-    </Page>
+    <AdminNavbar>
+      {!data ? (
+        <div>Loading..</div>
+      ) : (
+        <>
+          <h1>Assign New Annotator</h1>
+          <div style={{ maxWidth: "300px" }}>
+            <form onSubmit={form.onSubmit((values) => handlerSubmit(values))}>
+              <TextInput
+                withAsterisk
+                label="Name"
+                {...form.getInputProps("name")}
+              />
+              <TextInput
+                withAsterisk
+                label="Email"
+                placeholder="your@email.com"
+                {...form.getInputProps("email")}
+              />
+              <PasswordInput
+                withAsterisk
+                label="password"
+                {...form.getInputProps("password")}
+              ></PasswordInput>
+              <Group position="right" mt="md">
+                <Button type="submit">Submit</Button>
+              </Group>
+            </form>
+          </div>
+          <h3>Annotators List</h3>
+          <Table withBorder withColumnBorders>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>email</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </>
+      )}
+    </AdminNavbar>
   );
 };
 

@@ -51,57 +51,55 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
   };
 
   return (
-    <Page>
-      <AdminNavbar>
-        <div>
-          <div
-            style={{
-              border: "1px solid black",
-              backgroundColor: "lightgray",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "2rem",
-            }}
-          >
-            <div>Total Annotated Data - {numberOfAnnotated}</div>
-            <div>Total Unannotated Data - {numberOfUnAnnotated}</div>
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <div>
-                <Text>Filter</Text>
-              </div>
-              <div style={{ width: "5rem" }}>
-                <NumberInput
-                  hideControls
-                  placeholder="From"
-                  onChange={(val) => setFromValue(val)}
-                />
-              </div>
-              <div style={{ width: "5rem" }}>
-                <NumberInput
-                  hideControls
-                  placeholder="To"
-                  onChange={(val) => setToValue(val)}
-                />
-              </div>
-              <Button onClick={handlerSearch}>Search</Button>
+    <AdminNavbar>
+      <div>
+        <div
+          style={{
+            border: "1px solid black",
+            backgroundColor: "lightgray",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "2rem",
+          }}
+        >
+          <div>Total Annotated Data - {numberOfAnnotated}</div>
+          <div>Total Unannotated Data - {numberOfUnAnnotated}</div>
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+            <div>
+              <Text>Filter</Text>
             </div>
+            <div style={{ width: "5rem" }}>
+              <NumberInput
+                hideControls
+                placeholder="From"
+                onChange={(val) => setFromValue(val)}
+              />
+            </div>
+            <div style={{ width: "5rem" }}>
+              <NumberInput
+                hideControls
+                placeholder="To"
+                onChange={(val) => setToValue(val)}
+              />
+            </div>
+            <Button onClick={handlerSearch}>Search</Button>
           </div>
-          <Table withColumnBorders withBorder>
-            <thead>
-              <tr>
-                <th>Serial No</th>
-                <th>Sentence</th>
-                <th>Tags</th>
-                <th>Date</th>
-                <th>Annotator</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
         </div>
-      </AdminNavbar>
-    </Page>
+        <Table withColumnBorders withBorder>
+          <thead>
+            <tr>
+              <th>Serial No</th>
+              <th>Sentence</th>
+              <th>Tags</th>
+              <th>Date</th>
+              <th>Annotator</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </div>
+    </AdminNavbar>
   );
 };
 

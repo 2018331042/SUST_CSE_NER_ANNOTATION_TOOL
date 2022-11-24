@@ -6,6 +6,7 @@ import AdminNavbar from "../../components/adminNavbar";
 import Page from "../../components/page";
 import XLSX from "sheetjs-style";
 import * as FileSaver from "file-saver";
+import LoaderBar from "../../components/loaderbar";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const AnnotatorStats = () => {
@@ -18,7 +19,7 @@ const AnnotatorStats = () => {
   if (error) return <div>Failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
-  const selectData = data.annotators.map((annotator) => {
+  const selectData = data?.annotators.map((annotator) => {
     return {
       value: annotator._id,
       label: annotator.name,
@@ -55,29 +56,33 @@ const AnnotatorStats = () => {
     FileSaver.saveAs(data, `${annotatorName}` + fileExtension);
   };
   return (
-    <Page>
-      <AdminNavbar>
-        <Select
-          data={selectData}
-          searchable
-          withAsterisk
-          label="Select Annotator to view overall and daily stats"
-          placeholder="Select annotator"
-          onChange={(value) => getStats(value)}
-        ></Select>
-        <Button onClick={handleExportExcel}>Export to Excel</Button>
-        <Table withBorder withColumnBorders>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Completed Sentences</th>
-              <th>Completed Words</th>
-            </tr>
-          </thead>
-          <tbody>{dailyRows}</tbody>
-        </Table>
-      </AdminNavbar>
-    </Page>
+    <AdminNavbar>
+      {!data ? (
+        <LoaderBar />
+      ) : (
+        <>
+          <Select
+            data={selectData}
+            searchable
+            withAsterisk
+            label="Select Annotator to view overall and daily stats"
+            placeholder="Select annotator"
+            onChange={(value) => getStats(value)}
+          ></Select>
+          <Button onClick={handleExportExcel}>Export to Excel</Button>
+          <Table withBorder withColumnBorders>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Completed Sentences</th>
+                <th>Completed Words</th>
+              </tr>
+            </thead>
+            <tbody>{dailyRows}</tbody>
+          </Table>
+        </>
+      )}
+    </AdminNavbar>
   );
 };
 
