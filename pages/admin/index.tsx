@@ -1,4 +1,11 @@
-import { Button, NumberInput, Table, Text, TextInput } from "@mantine/core";
+import {
+  Button,
+  NumberInput,
+  Pagination,
+  Table,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -13,10 +20,18 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
   const [fromValue, setFromValue] = useState(0);
   const [toValue, setToValue] = useState(0);
   const [tagSentences, setTagSentences] = useState(data);
+  const [activePage, setActivePage] = useState(1);
+  const [dataPerPage, setDataPerPage] = useState(20);
   const router = useRouter();
   console.log({ data });
+  const indexOfLastData = activePage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentTagSentences = tagSentences.slice(
+    indexOfFirstData,
+    indexOfLastData
+  );
 
-  const rows = tagSentences.map((element) => (
+  const rows = currentTagSentences.map((element) => (
     <tr key={element.serial_no}>
       <td>{element.serial_no}</td>
       <td>{element.sentence}</td>
@@ -86,18 +101,26 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
             <Button onClick={handlerSearch}>Search</Button>
           </div>
         </div>
-        <Table withColumnBorders withBorder>
-          <thead>
-            <tr>
-              <th>Serial No</th>
-              <th>Sentence</th>
-              <th>Tags</th>
-              <th>Date</th>
-              <th>Annotator</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Table withColumnBorders withBorder>
+            <thead>
+              <tr>
+                <th>Serial No</th>
+                <th>Sentence</th>
+                <th>Tags</th>
+                <th>Date</th>
+                <th>Annotator</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+          <Pagination
+            style={{ alignSelf: "center", padding: "1rem" }}
+            page={activePage}
+            onChange={setActivePage}
+            total={tagSentences.length / dataPerPage}
+          />
+        </div>
       </div>
     </AdminNavbar>
   );

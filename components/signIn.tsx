@@ -53,7 +53,7 @@ function Signin() {
       return;
     }
     showNotification({
-      title: "SUCCESSFUL",
+      title: "FAILED",
       message: response.message,
       style: { backgroundColor: "#7bc62d" },
       color: "white",

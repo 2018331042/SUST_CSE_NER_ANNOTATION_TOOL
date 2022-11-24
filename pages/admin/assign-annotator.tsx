@@ -109,8 +109,10 @@ const AssignAnnotator = () => {
                 label="password"
                 {...form.getInputProps("password")}
               ></PasswordInput>
-              <Group position="right" mt="md">
-                <Button type="submit">Submit</Button>
+              <Group mt="md">
+                <Button fullWidth type="submit">
+                  Submit
+                </Button>
               </Group>
             </form>
           </div>

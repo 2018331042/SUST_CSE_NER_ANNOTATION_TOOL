@@ -13,9 +13,7 @@ const AnnotatorStats = () => {
   const [dailyData, setDailyData] = useState([]);
   const [overAllData, setOverAllData] = useState([]);
   const [annotatorName, setAnnotatorName] = useState("");
-  const { data, error } = useSWR("/api/auth/get-annotators", fetcher, {
-    refreshInterval: 1000,
-  });
+  const { data, error } = useSWR("/api/auth/get-annotators", fetcher);
   if (error) return <div>Failed to load</div>;
 
   const selectData = data?.annotators.map((annotator) => {
@@ -59,27 +57,31 @@ const AnnotatorStats = () => {
       {!data ? (
         <LoaderBar />
       ) : (
-        <>
-          <Select
-            data={selectData}
-            searchable
-            withAsterisk
-            label="Select Annotator to view overall and daily stats"
-            placeholder="Select annotator"
-            onChange={(value) => getStats(value)}
-          ></Select>
-          <Button onClick={handleExportExcel}>Export to Excel</Button>
-          <Table withBorder withColumnBorders>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Completed Sentences</th>
-                <th>Completed Words</th>
-              </tr>
-            </thead>
-            <tbody>{dailyRows}</tbody>
-          </Table>
-        </>
+        <div>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "2rem" }}>
+            <Select
+              data={selectData}
+              searchable
+              withAsterisk
+              label="Select Annotator to view overall and daily stats"
+              placeholder="Select annotator"
+              onChange={(value) => getStats(value)}
+            ></Select>
+            <Button onClick={handleExportExcel}>Export to Excel</Button>
+          </div>
+          <div style={{ marginTop: "2rem" }}>
+            <Table withBorder withColumnBorders>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Completed Sentences</th>
+                  <th>Completed Words</th>
+                </tr>
+              </thead>
+              <tbody>{dailyRows}</tbody>
+            </Table>
+          </div>
+        </div>
       )}
     </AdminNavbar>
   );

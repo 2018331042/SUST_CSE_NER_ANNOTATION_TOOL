@@ -31,11 +31,11 @@ export default async function handler(
           sentence: line,
         });
         const data = await newData.save();
-        //res.json({ message: "Data created successfully" });
       } catch (err) {
         console.log({ err });
       }
     }
+    res.json({ status: "success", message: "Data loaded successfully" });
   })();
 
   // const { sentence, tag_sentence } = req.body;
