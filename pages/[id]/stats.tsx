@@ -1,11 +1,8 @@
 import { Badge, Button, Table } from "@mantine/core";
 import React from "react";
 import AnnotatorNavbar from "../../components/annotatorNavbar";
-import Page from "../../components/page";
 import Dataset from "../../lib/models/dataset";
 import Stats from "../../lib/models/stats";
-import XLSX from "sheetjs-style";
-import * as FileSaver from "file-saver";
 
 const MyStats = ({ dailyData, overAllData }) => {
   const overAllRows = overAllData.map((element: any) => (
@@ -21,17 +18,6 @@ const MyStats = ({ dailyData, overAllData }) => {
       <td>{element.words}</td>
     </tr>
   ));
-
-  const handleExport = async () => {
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8";
-    const fileExtension = ".xlsx";
-    const ws = XLSX.utils.json_to_sheet(dailyData);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, "MyDailyData" + fileExtension);
-  };
   return (
     <AnnotatorNavbar>
       <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
@@ -59,7 +45,6 @@ const MyStats = ({ dailyData, overAllData }) => {
           <Badge style={{ width: "300px" }} color="teal" size="xl">
             Daily Statistics
           </Badge>
-          <Button onClick={handleExport}>Export To Excel</Button>
           <Table withColumnBorders highlightOnHover withBorder>
             <thead>
               <tr>

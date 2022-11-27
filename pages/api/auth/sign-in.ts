@@ -15,11 +15,8 @@ export default async function handler(
     const user = await User.findOne({ email });
     console.log({ user });
 
-    console.log({ id: user._id });
-    const id = user._id.toString();
-    console.log({ id });
-
     if (user) {
+      const id = user._id.toString();
       if (user.password === password) {
         if (user.isActive === true) {
           const { name, role } = user;
@@ -52,11 +49,11 @@ export default async function handler(
       } else {
         return res.json({
           status: "FAILED",
-          message: "email or password error",
+          message: "Email or Password error",
         });
       }
     } else {
-      return res.json({ status: "FAILED", message: "user not found" });
+      return res.json({ status: "FAILED", message: "Email or Password error" });
     }
   } catch (err) {
     console.log({ err });

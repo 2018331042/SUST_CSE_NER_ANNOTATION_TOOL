@@ -17,27 +17,59 @@ const Instructions = () => {
             },
           },
         }}
+        transitionDuration={1000}
       >
         <Accordion.Item value="1">
           <Accordion.Control>Tag Description</Accordion.Control>
           <Accordion.Panel>
-            B-Per: The word is the name of a person. If there are multiple words
-            that represent a single person, the first word will be tagged as
-            "B-Per". If the name consists of only one word, it will be tagged as
-            " B-Per". I-Per: All the words in a person's name, except the first
-            and the last one will be tagged as "I-Per". E-Per: The last word in
-            a person's name. B-Org: The first word in the name of an
-            organization/instituition. I-Org: All words except the first and the
-            last one in the name of an organization/instituition. E-Org: The
-            last word in the name of an organization/institution. Loc: The word
-            represents a location or a physical place. Time: The word specifies
-            a time/event. Object: The name of a thing or any object. Others:
-            This word does not belong to any Name Entity group. Skip: If you
-            don’t know the appropriate tag for a word, you can skip the word by
-            tagging 'skip'. The sentences that have skipped words will be stored
-            on the "skipped sentences" section. Skipped sentences can be further
-            tagged by anyone. Garbage: If there is a word that is misspelled or
-            does not make sense, the tag will be 'garbage'.
+            <div>
+              <b>B-Per:</b> The word is the name of a person. If there are
+              multiple words that represent a single person, the first word will
+              be tagged as <b>"B-Per"</b>. If the name consists of only one
+              word, it will be tagged as <b>"B-Per"</b>.
+            </div>
+            <div>
+              <b>I-Per:</b> All the words in a person's name, except the first
+              and the last one will be tagged as<b>"I-Per"</b>.
+            </div>
+            <div>
+              <b>E-Per:</b> The last word in a person's name.
+            </div>
+            <div>
+              {" "}
+              <b>B-Org:</b> The first word in the name of an
+              organization/instituition.
+            </div>
+            <div>
+              <b>I-Org:</b> All words except the first and the last one in the
+              name of an organization/instituition.
+            </div>
+            <div>
+              <b>E-Org:</b> The last word in the name of an
+              organization/institution.
+            </div>
+            <div>
+              <b>Loc:</b> The word represents a location or a physical place.
+            </div>
+            <div>
+              <b>Time:</b> The word specifies a time/event.
+            </div>
+            <div>
+              <b>Object:</b> The name of a thing or any object.
+            </div>
+            <div>
+              <b>Others:</b> This word does not belong to any Name Entity group.
+            </div>
+            <div>
+              <b>Skip:</b> If you don’t know the appropriate tag for a word, you
+              can skip the word by tagging 'skip'. The sentences that have
+              skipped words will be stored on the "skipped sentences" section.
+              Skipped sentences can be further tagged by anyone.
+            </div>
+            <div>
+              <b>Garbage:</b> If there is a word that is misspelled or does not
+              make sense, the tag will be 'garbage'.
+            </div>
           </Accordion.Panel>
         </Accordion.Item>
         <Accordion.Item value="2">

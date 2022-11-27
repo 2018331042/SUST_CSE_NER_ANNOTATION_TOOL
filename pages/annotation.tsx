@@ -83,7 +83,12 @@ const Annotation = ({ sentence }) => {
         {value &&
           (value.data !== "" ? (
             <>
-              <div style={{ border: "1px solid black", padding: "1rem" }}>
+              <div
+                style={{
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
                 {value.data.sentence}
               </div>
               <div style={{ marginTop: "2rem" }}>
