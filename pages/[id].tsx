@@ -42,13 +42,11 @@ export default AnnotatedData;
 
 export async function getServerSideProps(ctx: any) {
   const userId = ctx.query.id;
-  // console.log({ userId });
 
   const taggedSentence = await Dataset.find({
     user_id: userId,
     isAnnotated: true,
   });
-  console.log({ taggedSentence });
 
   const result = taggedSentence.map((tag: any) => {
     return {

@@ -23,7 +23,6 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
   const [activePage, setActivePage] = useState(1);
   const [dataPerPage, setDataPerPage] = useState(20);
   const router = useRouter();
-  console.log({ data });
   const indexOfLastData = activePage * dataPerPage;
   const indexOfFirstData = indexOfLastData - dataPerPage;
   const currentTagSentences = tagSentences.slice(
@@ -50,7 +49,6 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
   ));
 
   const handlerSearch = () => {
-    console.log({ fromValue, toValue });
     if (fromValue === undefined || toValue === undefined) {
       setTagSentences(data);
       return;
@@ -60,7 +58,6 @@ const Admin = ({ data, numberOfAnnotated, numberOfUnAnnotated }) => {
         (e) => e.serial_no >= fromValue && e.serial_no <= toValue
       );
 
-      console.log({ filterdAnnotatedData });
       setTagSentences(filterdAnnotatedData);
     }
   };
@@ -131,7 +128,6 @@ export default Admin;
 export async function getServerSideProps() {
   await connectDb();
   const annotatedData = await GET_ANNOTATED_DATA_AND_USER_INFO();
-  console.log({ annotatedData });
   const data = annotatedData.map((e) => {
     return {
       id: e._id.toString(),
@@ -148,11 +144,10 @@ export async function getServerSideProps() {
     lock: true,
     isAnnotated: true,
   }).count();
-  const numberOfUnAnnotated = await Dataset.find({ lock: false }).count();
-  console.log({ numberOfAnnotated });
-  console.log({ numberOfUnAnnotated });
-
-  console.log({ data });
+  const numberOfUnAnnotated = await Dataset.find({
+    lock: false,
+    isAnnotated: false,
+  }).count();
 
   return {
     props: {

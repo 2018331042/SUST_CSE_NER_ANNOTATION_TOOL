@@ -26,10 +26,8 @@ const Annotation = ({ sentence }) => {
 
   useEffect(() => {
     (async () => {
-      console.log({ value });
       try {
         const response = tokenize(value.data.sentence);
-        console.log({ response: response });
         const words = response;
         const wordsObject = words.map((e, idx) => {
           return {
@@ -37,41 +35,33 @@ const Annotation = ({ sentence }) => {
             word: e,
           };
         });
-        console.log({ words: words.length });
         setTokens(wordsObject);
         setNumberOfWords(words.length);
-      } catch (err) {
-        console.log({ err });
-      }
+      } catch (err) {}
     })();
   }, [value.data.sentence]);
 
   const handleNext = async () => {
-    console.log({ tags });
     const response = await axios.post("/api/dataset/update-tag-sentence", {
       tags,
       sen_id: value.data._id,
       token: localStorage.getItem("token"),
       numberOfWords,
     });
-    console.log({ response });
 
     const result = await axios.post("/api/dataset/get-sentence", {
       token: localStorage.getItem("token"),
     });
-    console.log({ result });
     setValue(result.data);
     setTags([]);
     setTagid([]);
   };
-  console.log({ tags });
 
   const handleSkip = async () => {
     const result = await axios.post("/api/dataset/get-sentence-after-skip", {
       sen_id: value.data._id,
       token: localStorage.getItem("token"),
     });
-    console.log({ result });
     setValue(result.data);
     setTags([]);
     setTagid([]);
@@ -155,14 +145,10 @@ export default Annotation;
 
 export async function getServerSideProps(ctx: any) {
   await connectDb();
-  // console.log({ token: localStorage.getItem("token") });
-  // console.log({ cookie: ctx.req });
   const { token } = ctx.req.cookies;
-  console.log({ token });
   const { data } = await axios.post(`${webSiteUrl}/api/dataset/get-sentence`, {
     token,
   });
-  console.log({ data });
   return {
     props: {
       sentence: data,

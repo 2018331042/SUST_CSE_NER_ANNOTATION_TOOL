@@ -9,9 +9,6 @@ const Navbar = ({ items, children, name, handleLogout }) => {
   const [hover, setHover] = useState(-1);
   const router = useRouter();
   const selected = (url: String) => {
-    console.log({ url });
-    console.log({ router });
-
     if (router.asPath === url) {
       return { backgroundColor: "#526295" };
     } else {

@@ -11,10 +11,8 @@ const Edit = ({ sentence }) => {
   const [value, setValue] = useState(sentence);
   const [tokens, setTokens] = useState([]);
   const router = useRouter();
-  console.log({ tags });
 
   useEffect(() => {
-    console.log({ value });
     const words = Object.keys(tags);
     const wordsObject = words.map((e, idx) => {
       return {
@@ -23,9 +21,7 @@ const Edit = ({ sentence }) => {
       };
     });
     const tagOptions = Object.values(tags);
-    console.log({ tagOptions });
 
-    console.log({ wordsObject });
     setTokens(wordsObject);
     setTagid(tagOptions);
   }, [value.sentence]);
@@ -104,17 +100,14 @@ export default Edit;
 
 export async function getServerSideProps(ctx: any) {
   const { id } = ctx.query;
-  console.log({ id });
 
   const findSentence = await Dataset.findById({ _id: id }).lean();
-  console.log(findSentence);
 
   const sentence = {
     id: findSentence._id.toString(),
     sentence: findSentence.sentence,
     tags: findSentence.tag_sentence,
   };
-  console.log({ sentence });
 
   return {
     props: {

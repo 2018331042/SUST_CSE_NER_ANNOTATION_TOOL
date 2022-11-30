@@ -16,7 +16,6 @@ const LoadData = () => {
   const [text, setText] = useState("click to select files");
   const [loading, setLoading] = useState(false);
   const handleFile = (files) => {
-    console.log(files[0]);
     setFiles(files);
     setText(files[0].name);
   };

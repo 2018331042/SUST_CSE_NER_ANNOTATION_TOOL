@@ -45,7 +45,7 @@ export async function getServerSideProps(ctx: any) {
   let data;
   try {
     const response = await Dataset.find({ isSkipped: true });
-    console.log({ response });
+
     data = response.map((e) => {
       return {
         id: e._id.toString(),
@@ -53,7 +53,6 @@ export async function getServerSideProps(ctx: any) {
         tags: e.tag_sentence,
       };
     });
-    console.log({ data });
   } catch (err) {
     console.log({ err });
   }

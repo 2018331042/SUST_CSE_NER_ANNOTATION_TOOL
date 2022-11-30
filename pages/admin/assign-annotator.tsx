@@ -32,7 +32,6 @@ const AssignAnnotator = () => {
   });
 
   if (error) return <div>failed to load</div>;
-  console.log(data);
   const rows = data?.annotators.map((annotator) => (
     <tr key={annotator.email}>
       <td>{annotator.name}</td>
@@ -60,9 +59,7 @@ const AssignAnnotator = () => {
   ));
 
   const handlerSubmit = async (values) => {
-    console.log(values);
     const response = await axios.post("/api/load-user", { values });
-    console.log({ response });
   };
 
   const handleConfirm = async (isActive: Boolean, id: String) => {
@@ -80,7 +77,6 @@ const AssignAnnotator = () => {
         <p>Are you sure you want to activate this annotator?</p>
       ),
       labels: { confirm: "Confirm", cancel: "Cancel" },
-      onCancel: () => console.log("cancel"),
       onConfirm: () => handleConfirm(isActive, id),
     });
 

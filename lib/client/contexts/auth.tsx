@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const verifyToken = () => {
       const token = localStorage.getItem("token");
-      console.log("token: ", token);
       if (token === null) {
         const isPublicRoute = ["/"].some((e) => e === router.pathname);
         if (!isPublicRoute) {
@@ -59,7 +58,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           token,
         })
         .then((response) => {
-          console.log({ response });
           const {
             data: {
               data: { _id, email, name, role },
@@ -67,9 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             },
           } = response;
           const id = _id.toString();
-          console.log({ id, email, name, role, isVerified });
           if (isVerified) {
-            console.log("here");
             setUser({ email, name, role, id } as User);
             setLoggedIn(true);
             if (
@@ -84,8 +80,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.pathname.startsWith("/annotation")) &&
               role === "admin"
             ) {
-              console.log(1);
-
               router.replace("/admin");
             }
           } else {
@@ -93,12 +87,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setLoggedIn(false);
           }
         })
-        .catch((err) => {
-          console.log("error found");
-        })
+        .catch((err) => {})
         .finally(() => {
-          console.log("two");
-
           setLoading(false);
         });
     };
@@ -110,15 +100,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     email: string,
     password: string
   ): Promise<{ status: string; message: string; errorMessage?: string }> => {
-    console.log({ email, password });
-
     try {
       const response = await axios.post("/api/auth/sign-in", {
         email,
         password,
       });
-
-      console.log({ response });
 
       const {
         data: { data, status, message },
@@ -153,7 +139,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
     return { status: "success", message: "logged out" };
   };
-  console.log({ isLoading });
 
   return (
     <AuthContext.Provider

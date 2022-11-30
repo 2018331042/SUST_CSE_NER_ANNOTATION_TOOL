@@ -29,7 +29,6 @@ const AnnotatorStats = () => {
     );
     setAnnotatorName(selectedAnnotator[0].name);
     const response = await axios.post("/api/stats/get-annotator-stats", { id });
-    console.log({ response });
     setDailyData(response.data.dailyData);
     setOverAllData(response.data.overAllData);
   };

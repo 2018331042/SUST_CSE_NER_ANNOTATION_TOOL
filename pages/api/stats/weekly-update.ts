@@ -11,7 +11,6 @@ export default async function handler(
   try {
     const get_stats = await Stats.find({});
 
-    console.log({ get_stats });
     const update_stats = get_stats.map((e) => {
       return {
         id: e._id,
@@ -21,8 +20,6 @@ export default async function handler(
         update_sentences: e.current_sentence,
       };
     });
-
-    console.log({ update_stats });
 
     update_stats.map(
       async (e) =>

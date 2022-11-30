@@ -20,6 +20,7 @@
     "@tabler/icons": "^1.111.0",
     "@types/mongoose": "^5.11.97",
     "axios": "^1.1.2",
+    "bcryptjs": "^2.4.3",
     "cookie": "^0.5.0",
     "fetchline": "^1.0.1",
     "file-saver": "^2.0.5",

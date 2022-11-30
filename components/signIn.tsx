@@ -37,13 +37,9 @@ function Signin() {
   const handleSubmit = async (values: Values) => {
     setLoading(true);
     const { email, password } = values;
-    console.log({ email, password });
 
     const response = await signIn(email, password);
-    console.log({ response });
     if (response.status === "success") {
-      console.log("success");
-
       showNotification({
         title: "SUCCESSFUL",
         message: response.message,

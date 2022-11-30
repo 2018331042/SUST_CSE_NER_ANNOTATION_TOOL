@@ -65,7 +65,6 @@ export default MyStats;
 
 export async function getServerSideProps(ctx: any) {
   const { id } = ctx.query;
-  console.log({ id });
   try {
     const dailyData = await Dataset.aggregate([
       { $match: { isAnnotated: true, user_id: id } },
@@ -85,17 +84,14 @@ export async function getServerSideProps(ctx: any) {
         },
       },
     ]);
-    console.log({ dailyData });
 
     const findStats = await Stats.find({ user_id: id });
-    console.log({ findStats });
     const overAllData = findStats.map((e) => {
       return {
         totalWords: e.current_words,
         totalSentences: e.current_sentence,
       };
     });
-    console.log({ overAllData });
 
     return {
       props: {

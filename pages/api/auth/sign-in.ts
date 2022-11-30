@@ -3,25 +3,23 @@ import connectDb from "../../../lib/db";
 import User from "../../../lib/models/user";
 import createToken from "../token";
 import cookie from "cookie";
+import bcrypt from "bcryptjs";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { email, password } = req.body;
-  console.log({ email, password });
 
   try {
     await connectDb();
     const user = await User.findOne({ email });
-    console.log({ user });
 
     if (user) {
       const id = user._id.toString();
-      if (user.password === password) {
+      if (bcrypt.compareSync(password, user.password)) {
         if (user.isActive === true) {
           const { name, role } = user;
           const token = createToken(role, id, email);
-          console.log(`token: ${token}`);
           res.setHeader(
             "Set-Cookie",
             cookie.serialize("token", token, {

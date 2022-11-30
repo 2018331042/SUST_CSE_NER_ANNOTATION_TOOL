@@ -6,11 +6,9 @@ import Navbar from "./common/navbar";
 const AnnotatorNavbar = ({ children }) => {
   const router = useRouter();
   const { user, signOut } = useAuth();
-  console.log({ user });
 
   const handleLogout = () => {
     const response = signOut();
-    console.log({ response });
   };
   const items = [
     {
