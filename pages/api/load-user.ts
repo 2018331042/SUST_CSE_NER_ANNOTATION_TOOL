@@ -13,16 +13,12 @@ export default async function handler(req, res) {
       email: values.email,
       name: values.name,
       password: bcrypt.hashSync(values.password),
-      role: values.role,
+      role: "annotator",
     });
     const user = await newUser.save();
-    if (values.role !== "admin") {
-      const newStats = new Stats({ user_id: user._id });
-      const stats = await newStats.save();
-      return res.json({ user, stats });
-    } else {
-      return res.json({ user });
-    }
+    const newStats = new Stats({ user_id: user._id });
+    const stats = await newStats.save();
+    return res.json({ user, stats });
   } catch (err) {
     console.log({ err });
 
