@@ -26,36 +26,105 @@ const Instructions = () => {
               <b>B-Per:</b> The word is the name of a person. If there are
               multiple words that represent a single person, the first word will
               be tagged as <b>"B-Per"</b>. If the name consists of only one
-              word, it will be tagged as <b>"B-Per"</b>.
+              word, it will be tagged as <b>"B-Per"</b>
+              <h4>
+                The underlined words are example of <b>B-per</b>
+              </h4>
+              <p>
+                আমাদের প্রামাণ্যচিত্রে <u>টমাস</u> ডিক্সটার বলেছেন, "আমরা সবাই{" "}
+                <u>বিল</u> গেটস হতে পারি না।
+              </p>
             </div>
             <div>
               <b>I-Per:</b> All the words in a person's name, except the first
               and the last one will be tagged as<b>"I-Per"</b>.
+              <h4>
+                The underlined words are example of <b>I-per</b>
+              </h4>
+              <p>
+                মার্শাল জামাল <u>উদ্দিন</u> আহমেদ বহর থেকে এফ-২৮ বাদ দেয়ার
+                ব্যাপারে চূড়ান্ত সিদ্ধান্তের কথা জানান
+              </p>
             </div>
             <div>
               <b>E-Per:</b> The last word in a person's name.
+              <h4>
+                The underlined words are example of <b>B-per</b>
+              </h4>
+              <p>
+                আমাদের প্রামাণ্যচিত্রে <u>টমাস</u> ডিক্সটার বলেছেন, "আমরা সবাই{" "}
+                <u>বিল</u> গেটস হতে পারি না।
+              </p>
             </div>
             <div>
               {" "}
               <b>B-Org:</b> The first word in the name of an
               organization/instituition.
+              <h4>
+                The underlined words are example of <b>B-Org</b>
+              </h4>
+              <p>
+                <u>শাহজালাল</u> বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় এবছর
+                দ্বিতীয়বারের মতো অনুষ্ঠানটি আয়োজন করতে যাচ্ছে
+              </p>
             </div>
             <div>
               <b>I-Org:</b> All words except the first and the last one in the
               name of an organization/instituition.
+              <h4>
+                The underlined words are example of <b>I-Org</b>
+              </h4>
+              <p>
+                শাহজালাল <u>বিজ্ঞান ও প্রযুক্তি</u> বিশ্ববিদ্যালয় এবছর
+                দ্বিতীয়বারের মতো অনুষ্ঠানটি আয়োজন করতে যাচ্ছে
+              </p>
             </div>
             <div>
               <b>E-Org:</b> The last word in the name of an
               organization/institution.
+              <h4>
+                The underlined words are example of <b>E-Org</b>
+              </h4>
+              <p>
+                শাহজালাল বিজ্ঞান ও প্রযুক্তি <u>বিশ্ববিদ্যালয়</u> এবছর
+                দ্বিতীয়বারের মতো অনুষ্ঠানটি আয়োজন করতে যাচ্ছে
+              </p>
             </div>
             <div>
               <b>Loc:</b> The word represents a location or a physical place.
+              <h4>
+                The underlined words are example of <b>Loc</b>
+              </h4>
+              <p>
+                পথিমধ্যে <u>নিজনান্দুয়ালী</u> এবছর এলাকার কিছু রাজাকার তাকে
+                হাত-পা বেঁধে নদীতে ডুবিয়ে হত্যা করে।
+              </p>
+              <p>
+                <u>বাংলাদেশের</u> অভ্যন্তরে <u>ভারতের</u> ১১১টি ও <u>ভারতের</u>{" "}
+                অভ্যন্তরে <u>বাংলাদেশের</u> ৫১টি ছিটমহল রয়েছে।
+              </p>
             </div>
             <div>
               <b>Time:</b> The word specifies a time/event.
+              <h4>
+                The underlined words are example of <b>Loc</b>
+              </h4>
+              <p>
+                গত <u>বসন্তে</u> তার সাথে আমার শেষ দেখা হয়েছিলো।
+              </p>
+              <p>
+                {" "}
+                <u>সাতচল্লিশের</u> দেশভাগের পরেই শুরু ছিটমহল আখ্যানের।
+              </p>
             </div>
             <div>
               <b>Object:</b> The name of a thing or any object.
+              <h4>
+                The underlined words are example of <b>Loc</b>
+              </h4>
+              <p>
+                <u>ডিনার সেট</u> কেনায় চামেলী কোন বিষয়টি বিবেচনা করেছেন?
+              </p>
             </div>
             <div>
               <b>Others:</b> This word does not belong to any Name Entity group.
