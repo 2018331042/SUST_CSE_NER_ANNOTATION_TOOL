@@ -28,7 +28,7 @@ const AnnotatorNavbar = ({ children }) => {
       url: `/${user.id}/stats`,
     },
     {
-      name: "instructions",
+      name: "Instructions",
       url: "/instructions",
     },
   ];

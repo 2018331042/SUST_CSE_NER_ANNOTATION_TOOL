@@ -14,7 +14,7 @@ const AdminNavbar = ({ children }) => {
   };
   const items = [
     {
-      name: "Annotated Sentences",
+      name: "Annotation Stats",
       url: "/admin",
     },
     {
@@ -22,7 +22,7 @@ const AdminNavbar = ({ children }) => {
       url: "/admin/skip-words",
     },
     {
-      name: "User Stats",
+      name: "User Stats by Dates",
       url: "/admin/annotator-stats",
     },
     {
