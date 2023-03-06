@@ -1,7 +1,10 @@
 import readlineiter from "readlineiter";
 import connectDb from "../../lib/db";
+import Dataset from "../../lib/models/dataset";
 import Stats from "../../lib/models/stats";
 import { FIND_ANNOTATORS, FIND_ONE_SENTENCE, GET_STATS_TABLE_INFO } from "../../lib/server/queries";
+import jsonfile from 'jsonfile';
+
 export default async function handler(req, res) {
   // const { id, numberOfWords } = req.body;
   await connectDb();
@@ -13,9 +16,34 @@ export default async function handler(req, res) {
     // console.log(annotators);
     // res.json({ annotators });
 
-    const stats = await GET_STATS_TABLE_INFO();
-    stats.map( (stat) => console.log(stat.current_words, stat.current_sentence, stat.user[0].name))
-    res.json({stats})
+    // const stats = await GET_STATS_TABLE_INFO();
+    // stats.map( (stat) => console.log(stat.current_words, stat.current_sentence, stat.user[0].name))
+    // res.json({stats})
+
+    const data = await Dataset.aggregate([
+      { $match: { isSkipped: false, isAnnotated: true } },
+      { $limit: 12000 },
+    ]);
+    let object = [];
+    data.map((e) => {
+      for (const [key, value] of Object.entries(e.tag_sentence)) {
+        object.push({
+          sentence: e.sentence,
+          words: key,
+          labels: value,
+        });
+      }
+    });
+    // console.log({ finetuned });
+    // res.json({ object });
+
+    
+    jsonfile.writeFile('pythonScript/firstbulk.json', object, function(err, success){
+      if(err) return res.json({err});
+
+      res.json({success})
+    })
+
   } catch (err) {
     res.json({ err });
   }
