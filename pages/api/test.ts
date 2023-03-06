@@ -25,24 +25,35 @@ export default async function handler(req, res) {
       { $limit: 12000 },
     ]);
     let object = [];
-    data.map((e) => {
-      for (const [key, value] of Object.entries(e.tag_sentence)) {
-        object.push({
-          sentence: e.sentence,
-          words: key,
-          labels: value,
-        });
+
+    const jsonl = data.map((e) => {
+      return {
+        tokens: Object.keys(e.tag_sentence),
+        tags: Object.values(e.tag_sentence) 
       }
-    });
+    })
+
+    //**converting tag sentences to a json object */
+    // data.map((e) => {
+    //   for (const [key, value] of Object.entries(e.tag_sentence)) {
+    //     object.push({
+    //       sentence: e.sentence,
+    //       words: key,
+    //       labels: value,
+    //     });
+    //   }
+    // });
     // console.log({ finetuned });
     // res.json({ object });
 
     
-    jsonfile.writeFile('pythonScript/firstbulk.json', object, function(err, success){
+    jsonfile.writeFile('jsonl.json', jsonl, function(err, success){
       if(err) return res.json({err});
 
-      res.json({success})
+      res.json({success:"success"})
     })
+
+    // res.json({jsonl})
 
   } catch (err) {
     res.json({ err });
