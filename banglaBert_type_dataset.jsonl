@@ -14,7 +14,7 @@
 {"tokens":["১৬","১","যে","কোন","দেশে","উৎপন্ন","দুগ্ধ","দুগ্ধজাত","খাদ্য","দ্রব্যাদি","তৈল","ভোজ্য","ও","অন্যান্য","সামগ্রী","আমদানির","ক্ষেত্রে","উহাদের","পরীক্ষা","বাধ্যতামূলক","পারমাণবিক","তেজস্ক্রিয়তা"],"tags":["OTHERS","OTHERS","OTHERS","OTHERS","LOC","OTHERS","OBJECT","OBJECT","OBJECT","OBJECT","OBJECT","OBJECT","OTHERS","OTHERS","OBJECT","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS"]}
 {"tokens":["টিআইবি","প্রথম","আলো","দুর্নীতি","বিষয়ে","গবেষণা","জনমত","জরিপ","করে","প্রকৃত","পরিস্থিতি","তুলে","ধরে","ও"],"tags":["B-ORG","OTHERS","OBJECT","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS","OTHERS"]}
 {"tokens":["বীজগণিতীয়","সূত্রাবলি","ও","প্রয়োগ"],"tags":["OTHERS","OTHERS","OTHERS","OTHERS"]}
-{"tokens":["না","আমি","বাহিরে","নাস্তা","করা","পছন্দ","করিনা"],"tags":["OTHERS","B-PER","LOC","OBJECT","OTHERS","OTHERS","OTHERS"]}
+{"tokens":["না","আমি","বাহিরে","নাস্তা","করা","পছন্দ","করিনা"],"tags":["OTHERS","B-PER","LOC","OBJECT","OTHERS","OTHERS","OTHERS"]}         
 {"tokens":["১১২","বাজেট","উপস্থাপনের","দিনে","উহার","আলোচনা","না","হওয়া"],"tags":["OBJECT","OBJECT","TIME","TIME","OBJECT","OBJECT","OTHERS","GARBAGE"]}
 {"tokens":["সুনাগরিকের","আত্মসংযম","থাকা","উচিত"],"tags":["B-PER","OBJECT","OTHERS","OTHERS"]}
 {"tokens":["অন্যদের","প্রতি","সহনশীলতা","এবং","পরবর্তী","আনুষ্ঠানিক","শিক্ষার","জন্য","শৃঙ্খলাবোধ","সম্পর্কে","ধারণা","লাভ"],"tags":["B-PER","OTHERS","OBJECT","OTHERS","TIME","OBJECT","OBJECT","OBJECT","OBJECT","OBJECT","OBJECT","OBJECT"]}
