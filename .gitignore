@@ -35,3 +35,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# Dataset
+
+/banglabert_dataset
+/json_dataset
+jsonl.json
+input.txt
+banglabert_type_dataset.jsonl
+ner_lines.bn
+test_data.txt

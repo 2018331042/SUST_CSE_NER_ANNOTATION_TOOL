@@ -37,13 +37,22 @@ const Validation = ({ sentence }) => {
       user_id: value.user_id,
       tags,
     });
+    console.log({ response });
 
-    // if (response.data.status === "SUCCESS") {
-    //   alert("updated Successfully");
-    //   router.back();
-    // } else {
-    //   alert("something wrong");
-    // }
+    if (response.data.status === "success") {
+      const { data } = await axios.get("/api/dataset/get-no-validate");
+      const sentence = {
+        id: data.data._id,
+        serial_no: data.data.serial_no,
+        sentence: data.data.sentence,
+        tags: data.data.tag_sentence,
+        numberOfTagWords: data.data.numberOfTagWords,
+        user_id: data.data.user_id,
+      };
+
+      setTags(sentence.tags);
+      setValue(sentence);
+    }
   };
 
   return (

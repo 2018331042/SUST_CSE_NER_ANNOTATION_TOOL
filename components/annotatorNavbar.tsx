@@ -24,6 +24,10 @@ const AnnotatorNavbar = ({ children }) => {
       url: "/skip-words",
     },
     {
+      name: "Validation",
+      url: "/validation",
+    },
+    {
       name: "My Stats",
       url: `/${user.id}/stats`,
     },

@@ -27,10 +27,7 @@ export default async function handler(req, res) {
       dataset.map((datam) => {
         console.log({ words: user._id.toString() });
         if (datam._id.user_id === user._id.toString()) {
-          if (
-            (datam._id.year === 2022 && datam._id.month >= 11) ||
-            (datam._id.year === 2023 && datam._id.month < 3)
-          )
+          if (datam._id.year === 2023 && datam._id.month >= 5)
             totalTagwords = datam.total + totalTagwords;
         }
       });
