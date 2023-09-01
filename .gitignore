@@ -39,8 +39,8 @@ next-env.d.ts
 
 # Dataset
 
-/banglabert_dataset
-/json_dataset
+/banglabert_dataset/
+/json_dataset/
 jsonl.json
 input.txt
 banglabert_type_dataset.jsonl
