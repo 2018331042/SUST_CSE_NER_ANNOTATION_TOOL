@@ -1,4 +1,3 @@
-
 import Dataset from "../models/dataset";
 import Stats from "../models/stats";
 import User from "../models/user";
@@ -7,8 +6,16 @@ export async function FIND_ONE_SENTENCE(id: String) {
   return await Dataset.findOne({ lock: false, skippedBy: { $ne: id } }).lean();
 }
 
-export async function FIND_ANNOTATORS(){
-  return await User.find({role: 'annotator'});
+export async function FIND_ONE_INVALIDATE_SENTENCE() {
+  return await Dataset.findOne({
+    isLockToValidate: false,
+    isValidated: false,
+    isAnnotated: true,
+  }).lean();
+}
+
+export async function FIND_ANNOTATORS() {
+  return await User.find({ role: "annotator" });
 }
 
 export async function LOCK_SENTENCE_TO_USER(senId: String, userId: String) {
@@ -18,11 +25,29 @@ export async function LOCK_SENTENCE_TO_USER(senId: String, userId: String) {
   );
 }
 
+export async function LOCK_INVALIDATE_SENTENCE_TO_USER(
+  senId: String,
+  userId: String
+) {
+  return await Dataset.updateOne(
+    { _id: senId },
+    { $set: { isLockToValidate: true, validate_user_id: userId } }
+  );
+}
+
 export async function FIND_LOCKED_SENTENCE_TO_USER(userId: String) {
   return await Dataset.findOne({
     lock: true,
     user_id: userId,
     isAnnotated: false,
+  });
+}
+
+export async function FIND_LOCKED_INVALIDATE_SENTENCE_TO_USER(userId: String) {
+  return await Dataset.findOne({
+    isLockToValidate: true,
+    validate_user_id: userId,
+    isValidated: false,
   });
 }
 
@@ -57,7 +82,7 @@ export async function GET_ANNOTATED_DATA_AND_USER_INFO() {
 
 export async function GET_STATS_TABLE_INFO() {
   return await Stats.aggregate([
-      {
+    {
       $lookup: {
         from: "users",
         let: {

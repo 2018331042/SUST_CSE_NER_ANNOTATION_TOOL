@@ -15,9 +15,9 @@ export default async function handler(
   await connectDb();
 
   try {
-    const result = await Dataset.findOne({ isValidated: false });
+    //const result = await Dataset.findOne({ isValidated: false });
     const update = await Dataset.updateOne(
-      { _id: sen_id, isValidated: false },
+      { _id: sen_id },
       { $set: { isValidated: true } }
     );
 

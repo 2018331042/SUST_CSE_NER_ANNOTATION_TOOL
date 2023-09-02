@@ -40,7 +40,10 @@ const Validation = ({ sentence }) => {
     console.log({ response });
 
     if (response.data.status === "success") {
-      const { data } = await axios.get("/api/dataset/get-no-validate");
+      const { data } = await axios.post("/api/dataset/get-no-validate", {
+        sen_id: value.id,
+        token: localStorage.getItem("token"),
+      });
       const sentence = {
         id: data.data._id,
         serial_no: data.data.serial_no,
@@ -52,6 +55,8 @@ const Validation = ({ sentence }) => {
 
       setTags(sentence.tags);
       setValue(sentence);
+    } else {
+      setValue(response.data);
     }
   };
 
@@ -103,6 +108,11 @@ const Validation = ({ sentence }) => {
             </div>
           </>
         )}
+        :(
+        <div style={{ border: "1px solid black", padding: "1rem" }}>
+          {value.message}
+        </div>
+        )
       </div>
     </AnnotatorNavbar>
   );
@@ -112,7 +122,7 @@ export default Validation;
 
 export async function getServerSideProps(ctx: any) {
   const { id } = ctx.query;
-
+  const { token } = ctx.req.cookies;
   //   const findSentence = await Dataset.findOne({
   //     isAnnotated: true,
   //     isValidated: false,
@@ -129,7 +139,12 @@ export async function getServerSideProps(ctx: any) {
   //   user_id: findSentence.user_id,
   // };
 
-  const { data } = await axios.get(`${webSiteUrl}/api/dataset/get-no-validate`);
+  const { data } = await axios.post(
+    `${webSiteUrl}/api/dataset/get-no-validate`,
+    {
+      token,
+    }
+  );
   console.log({ data });
 
   const sentence = {

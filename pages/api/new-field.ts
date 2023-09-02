@@ -4,7 +4,10 @@ import Dataset from "../../lib/models/dataset";
 export default async function handler(req, res) {
   await connectDb();
   try {
-    const res = await Dataset.updateMany({}, { $set: { isValidated: false } });
+    const res = await Dataset.updateMany(
+      {},
+      { $set: { isLockToValidate: false, validate_user_id: null } }
+    );
     console.log({ res });
 
     console.log("All data is now unvalidated");
