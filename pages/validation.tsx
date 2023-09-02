@@ -108,11 +108,6 @@ const Validation = ({ sentence }) => {
             </div>
           </>
         )}
-        :(
-        <div style={{ border: "1px solid black", padding: "1rem" }}>
-          {value.message}
-        </div>
-        )
       </div>
     </AnnotatorNavbar>
   );
