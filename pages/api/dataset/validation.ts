@@ -2,15 +2,23 @@ import { NextApiRequest, NextApiResponse } from "next";
 import connectDb from "../../../lib/db";
 import Dataset from "../../../lib/models/dataset";
 import Validate from "../../../lib/models/validate";
+import OutValidate from "../../../lib/models/out.validate";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { sen_id, serial_no, numberOfTagWords, user_id, tags, sentence } =
+  const { sen_id, serial_no, numberOfTagWords, validator_id, tags, sentence } =
     req.body;
 
-  console.log({ sen_id, sentence, serial_no, numberOfTagWords, user_id, tags });
+  console.log({
+    sen_id,
+    sentence,
+    serial_no,
+    numberOfTagWords,
+    validator_id,
+    tags,
+  });
 
   await connectDb();
 
@@ -23,12 +31,12 @@ export default async function handler(
 
     console.log({ update });
 
-    const validate = new Validate({
+    const validate = new OutValidate({
       serial_no: serial_no,
       sentence: sentence,
       tag_sentence: tags,
       numberOfTagWords: numberOfTagWords,
-      user_id: user_id,
+      validator_id: validator_id,
     });
     console.log({ validate });
 

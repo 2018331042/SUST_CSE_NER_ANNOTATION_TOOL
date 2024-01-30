@@ -35,6 +35,10 @@ const AnnotatorNavbar = ({ children }) => {
       name: "Instructions",
       url: "/instructions",
     },
+    {
+      name: "validation stats",
+      url: "/validator-stats",
+    },
   ];
   return (
     <Navbar items={items} name={user.name} handleLogout={handleLogout}>

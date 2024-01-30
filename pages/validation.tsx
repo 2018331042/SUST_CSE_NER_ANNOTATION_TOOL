@@ -7,12 +7,16 @@ import { tagOptions } from "../utils/const";
 import Dataset from "../lib/models/dataset";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import { webSiteUrl } from "../utils/urls";
+import { useAuth } from "../lib/client/contexts/auth";
 const Validation = ({ sentence }) => {
   const [tags, setTags] = useState(sentence.tags);
   const [tagId, setTagid] = useState([]);
   const [value, setValue] = useState(sentence);
   const [tokens, setTokens] = useState([]);
+  const { user } = useAuth();
   const router = useRouter();
+
+  console.log({ user });
 
   useEffect(() => {
     const words = Object.keys(tags);
@@ -34,7 +38,7 @@ const Validation = ({ sentence }) => {
       serial_no: value.serial_no,
       sentence: value.sentence,
       numberOfTagWords: value.numberOfTagWords,
-      user_id: value.user_id,
+      validator_id: user.id,
       tags,
     });
     console.log({ response });

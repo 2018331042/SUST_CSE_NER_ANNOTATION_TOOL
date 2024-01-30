@@ -37,6 +37,10 @@ const AdminNavbar = ({ children }) => {
       name: "Assign Annotators",
       url: "/admin/assign-annotator",
     },
+    {
+      name: "validation stats",
+      url: "/admin/validator-stat",
+    },
   ];
   return (
     <Navbar items={items} name={user.name} handleLogout={handleLogout}>
